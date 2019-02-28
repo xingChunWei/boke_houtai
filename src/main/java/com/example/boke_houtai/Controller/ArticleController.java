@@ -1,7 +1,8 @@
 package com.example.boke_houtai.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.boke_houtai.pojo.ArticleTypes;
-import com.example.boke_houtai.pojo.WebResult;
+import com.example.boke_houtai.pojo.JsonResult;
 import com.example.boke_houtai.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 
 /**
@@ -31,40 +31,40 @@ public class ArticleController {
 
     /**
      * 添加文章分类
+     *
      * @param types
      * @return
      */
     @RequestMapping("/saveTypes")
     @ResponseBody
-    public WebResult saveArtileTypes(ArticleTypes types) {
-        WebResult webResult = new WebResult();
+    public JsonResult saveArtileTypes(ArticleTypes types) {
+        JsonResult jsonResult = new JsonResult();
         try {
             articleService.saveArticleTypl(types);
             logger.info("文章分类添加成功");
-            return webResult;
+            jsonResult.setCode(200);
+            return jsonResult;
         } catch (Exception e) {
             e.getStackTrace();
             logger.info("添加文章分类出现异常");
-            return webResult.put("code", 404);
+            jsonResult.setCode(404);
+            return jsonResult;
         }
 
     }
 
     /**
      * 查询文章类型
-     * @param request
+     *
+     * @param
      */
     @RequestMapping("/findArticleTypes")
-    public ModelAndView  findArticleTypes(HttpServletRequest request){
-        ModelAndView md= new ModelAndView();
-        md.setViewName("wz_fl");
-
-        logger.info("进入查询文章类型");
-       List<ArticleTypes> articleTypes =  articleService.findAll();
-       logger.info("查处结果");
-       /*request.setAttribute("ArticleTypes",articleTypes);*/
-        md.addObject("ArticleTypes",articleTypes);
-       return md;
+    @ResponseBody
+    public JsonResult findArticleTypes() {
+        JsonResult jsonResult = new JsonResult();
+        List<ArticleTypes> articleTypeslist = articleService.findAll();
+        jsonResult.setObj(articleTypeslist);
+        return jsonResult;
     }
 
 }

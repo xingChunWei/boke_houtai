@@ -1,9 +1,15 @@
 package com.example.boke_houtai.Controller;
 
+import com.example.boke_houtai.pojo.ArticleTypes;
+import com.example.boke_houtai.service.ArticleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 博客后台页面相关跳转
@@ -14,13 +20,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/index")
 public class IndexController {
 
+    private Logger logger = LoggerFactory.getLogger(IndexController.class);
+    @Autowired
+    private ArticleService articleService;
+
     /**
      * 登录
-     * @param request
+     * @param
      * @return
      */
     @RequestMapping("/login")
-    public String getIndex(HttpServletRequest request) {
+    public String getlogin() {
 
 
         return "login";
@@ -32,7 +42,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/Uindex")
-    public  String getIndex(){
+    public  String getIndex( ){
 
         return "index";
     }
@@ -82,8 +92,10 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/wzfl")
-    public String wzfl(){
-
+    public String wzfl(HttpServletRequest request){
+        List<ArticleTypes> articleTypes =  articleService.findAll();
+        logger.info("查处结果");
+        request.setAttribute("articleTypes",articleTypes);
         return "wz_fl";
     }
 

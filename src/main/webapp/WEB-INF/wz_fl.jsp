@@ -9,7 +9,7 @@
     <title>文章分类</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/one.css">
@@ -22,7 +22,7 @@
             <caption>文章分类</caption>
             <caption>
 
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">添加分类</button>
+                <button type="button" class="btn btn-default" id="tjfl" data-toggle="modal" data-target="#myModal">添加分类</button>
                 <button type="button" class="btn btn-default">批量删除</button>
             </caption>
             <thead>
@@ -32,7 +32,7 @@
                         <input type="checkbox">
                     </label>
                 </div></th>
-                <th>序号</th>
+                <th>ID</th>
                 <th>名称</th>
                 <th>父级分类</th>
                 <th>描述</th>
@@ -42,8 +42,7 @@
             </thead>
             <tbody>
 
-            <c:forEach items="${ArticleTypes}" var="articleTypes">
-
+            <c:forEach   var="type" items="${articleTypes}">
                 <tr><td>
                     <div class="checkbox">
                         <label>
@@ -51,17 +50,23 @@
                         </label>
                     </div>
                 </td>
-                    <td>1</td>
-                    <td>${articleTypes.articleTypeName}</td>
-                    <td>${articleTypes.state}</td>
-                    <td>${articleTypes.describ}</td>
-                    <td>${articleTypes.parentCategory}</td>
+                    <td>${type.ID}</td>
+                    <td>${type.articleTypeName}</td>
+                    <td>${type.parentCategory}</td>
+                    <td>${type.describ}</td>
+                    <c:if test="${type.state=='0'}">
+                        <td>否</td>
+                    </c:if>
+                    <c:if test="${type.state=='1'}">
+                        <td>是</td>
+                    </c:if>
+
                     <td>
+                        <button type="button" class="btn btn-success">激活</button>
                         <button type="button" class="btn btn-primary">编辑</button>
                         <button type="button" class="btn btn-danger">删除</button>
                     </td>
                 </tr>
-
             </c:forEach>
 
             </tbody>
@@ -83,37 +88,24 @@
                     <div class="form-group">
                         <label for="firstname" class="col-sm-3 control-label">分类名称：</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="firstname" placeholder="请输入名字">
+                            <input type="text" class="form-control" name="articleTypeName" id="firstname" placeholder="请输入名字">
                         </div>
                     </div>
                     <div class="form-group">
                         <%--@declare id="name"--%><label for="name" class="col-sm-3 control-label">父级分类：</label>
                         <div class="col-sm-5">
-                            <select class="form-control">
+                            <select class="form-control" name="parentCategory">
                                 <option>--选择--</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                               <%-- <c:forEach items="articleTypes" var="typ">
+                                <option value="${typ.ID}">${typ.articleTypeName}</option>
+                                </c:forEach>--%>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <%--@declare id="lastname"--%><label for="lastname" class="col-sm-3 control-label">描述：</label>
                         <div class="col-sm-7">
-                            <textarea class="form-control" rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <%--@declare id="lastname"--%><label for="lastname" class="col-sm-3 control-label">是否可用：</label>
-                        <div class="col-sm-7">
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 是
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 否
-                            </label>
+                            <textarea class="form-control" name="describ" rows="3"></textarea>
                         </div>
                     </div>
                 </form>
@@ -131,11 +123,24 @@
 </html>
 <script>
     $(function () {
-        $.ajax({
-            type:'GET',
-                url :"/article/findArticleTypes"
-        }
 
-        )
+        $("#tjfl").click(function () {
+            $.ajax({
+                type:'GET',
+                url :"/article/findArticleTypes",
+                cache: false,
+                contentType: "application/json",
+                dataType:'json',
+                success:function (datas) {
+                    console.log(datas)
+                    alert("1111");
+                    alert(datas.obj[0].iD);
+                },
+                error:function (data) {
+                    alert("2222")
+                }
+            });
+        });
+
     });
 </script>
