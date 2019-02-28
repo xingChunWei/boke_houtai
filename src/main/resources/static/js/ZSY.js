@@ -6,7 +6,7 @@ jQuery(function($){
     // 头部高度：自行修改即可
     var headerHeight = 60;
     // 目录树宽度：自行修改即可
-    var menuWidth = 250;
+    var menuWidth = 230;
     // 显示区域宽度
     var windowWidth = 0;
     // 显示区域高度

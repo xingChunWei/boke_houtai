@@ -51,20 +51,25 @@
     right: 15px;
 }
 
+/*
 .left-ml li:hover {
     background: #eee;
-    /* height:200px;*/
+     height:200px;
 }
 
-/*
+
 .left-ml li:hover h2{
     background: lime;
 }
 .left-ml li:hover h2:before{
     border-color:transparent transparent transparent #000;
 }*/
-
-
+/**
+      公共的
+ */
+.mai{
+    margin-left: 30px;
+}
 /**
 编辑文章
  */
@@ -113,3 +118,4 @@
 
     border-radius: 10px;
 }
+

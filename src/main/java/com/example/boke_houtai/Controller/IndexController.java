@@ -57,5 +57,34 @@ public class IndexController {
         return "wz_gl";
     }
 
+    /**
+     * 留言管理
+     * @return
+     */
+    @RequestMapping("/wzly")
+    public String wzly(){
+
+        return "wz_ly";
+    }
+
+    /**
+     * 文章评论
+     * @return
+     */
+    @RequestMapping("/wzpl")
+    public String wzpl(){
+
+        return "wz_pl";
+    }
+
+    /**
+     * 文章分类
+     * @return
+     */
+    @RequestMapping("/wzfl")
+    public String wzfl(){
+
+        return "wz_fl";
+    }
 
 }

@@ -37,10 +37,13 @@
                     <h2 onclick="tz('/index/wzgl')">文章管理</h2>
                 </li>
                 <li>
-                    <h2>留言</h2>
+                    <h2 onclick="tz('/index/wzfl')">文章分类</h2>
                 </li>
                 <li>
-                    <h2>评论</h2>
+                    <h2 onclick="tz('/index/wzly')">留言</h2>
+                </li>
+                <li>
+                    <h2 onclick="tz('/index/wzpl')">评论</h2>
                 </li>
             </ul>
         </div>

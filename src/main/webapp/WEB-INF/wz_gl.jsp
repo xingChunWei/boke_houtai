@@ -16,7 +16,7 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
 
-<div style="margin-left: 30px;">
+<div class="mai">
 <div>
 <table class="table table-hover">
     <caption>博客文章管理</caption>
@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 
     <caption>
         <div class="btn-group col-lg-3 col-md-3">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Action <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
