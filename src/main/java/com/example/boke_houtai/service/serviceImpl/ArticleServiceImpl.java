@@ -11,8 +11,9 @@ import java.util.List;
 
 /**
  * 文章Service
- * @author  XingChunWei
- * @date   2019-2-28 下午13:49
+ *
+ * @author XingChunWei
+ * @date 2019-2-28 下午13:49
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -27,7 +28,20 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleTypes> findAll() {
-        return artileMapper.findAll();
+    public List<ArticleTypes> findAll(ArticleTypes types) {
+        return artileMapper.findAll(types);
+    }
+
+    @Transactional
+    @Override
+    public void updataState(ArticleTypes articleTypes) {
+        artileMapper.updataState(articleTypes);
+
+    }
+
+    @Transactional
+    @Override
+    public void delArticleType(int id) {
+        artileMapper.delArticleType(id);
     }
 }

@@ -41,7 +41,18 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!--需要加上版本号-->
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -82,9 +93,11 @@
         </dependency>
         <!-- Spring Boot log4j依赖 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j</artifactId>
-        </dependency>
+     <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-log4j</artifactId>
+       <version>1.3.8.RELEASE</version>
+     </dependency>
+
     </dependencies>
 
 

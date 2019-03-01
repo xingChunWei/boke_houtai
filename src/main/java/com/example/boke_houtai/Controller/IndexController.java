@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 博客后台页面相关跳转
+ *
  * @author XingChunWei
  * @data 2019-2-26 18:29
  */
@@ -26,6 +27,7 @@ public class IndexController {
 
     /**
      * 登录
+     *
      * @param
      * @return
      */
@@ -39,63 +41,69 @@ public class IndexController {
 
     /**
      * 后台
+     *
      * @return
      */
     @RequestMapping("/Uindex")
-    public  String getIndex( ){
+    public String getIndex() {
 
         return "index";
     }
 
     /**
      * 编辑博客
+     *
      * @return
      */
     @RequestMapping("/bjboKe")
-    public String bjboKe(){
+    public String bjboKe() {
 
         return "bjboKe";
     }
 
     /**
      * 文章管理
+     *
      * @return
      */
     @RequestMapping("/wzgl")
-    public String wzgl(){
+    public String wzgl() {
 
         return "wz_gl";
     }
 
     /**
      * 留言管理
+     *
      * @return
      */
     @RequestMapping("/wzly")
-    public String wzly(){
+    public String wzly() {
 
         return "wz_ly";
     }
 
     /**
      * 文章评论
+     *
      * @return
      */
     @RequestMapping("/wzpl")
-    public String wzpl(){
+    public String wzpl() {
 
         return "wz_pl";
     }
 
     /**
      * 文章分类
+     *
      * @return
      */
     @RequestMapping("/wzfl")
-    public String wzfl(HttpServletRequest request){
-        List<ArticleTypes> articleTypes =  articleService.findAll();
+    public String wzfl(HttpServletRequest request) {
+        List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());
         logger.info("查处结果");
-        request.setAttribute("articleTypes",articleTypes);
+        request.setAttribute("articleTypes", articleTypes);
         return "wz_fl";
     }
 

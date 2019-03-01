@@ -17,7 +17,11 @@ public interface ArticleTypesMapper {
      */
  public  void saveArtileTypl(ArticleTypes types);
 
- public List<ArticleTypes> findAll();
+ public List<ArticleTypes> findAll(ArticleTypes types);
+
+ void updataState(ArticleTypes types);
+
+ void delArticleType(int id);
 
 
 }

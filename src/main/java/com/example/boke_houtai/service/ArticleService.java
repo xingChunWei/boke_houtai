@@ -8,5 +8,9 @@ public interface ArticleService {
 
     void  saveArticleTypl(ArticleTypes types);
 
-    List<ArticleTypes> findAll();
+    List<ArticleTypes> findAll(ArticleTypes types);
+
+    void  updataState(ArticleTypes articleTypes);
+
+    void  delArticleType(int id);
 }

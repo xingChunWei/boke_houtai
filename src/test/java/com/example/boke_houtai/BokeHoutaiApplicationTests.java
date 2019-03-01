@@ -12,17 +12,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class BokeHoutaiApplicationTests {
 
-    @Autowired
-    private ArticleTypesMapper artileMapper;
-
-    @Test
-    public void contextLoads() {
-        ArticleTypes articleTypes = new ArticleTypes();
-        articleTypes.setArticleTypeName("Spring");
-        articleTypes.setDescrib("框架");
-        articleTypes.setState(0);
-        articleTypes.setParentCategory(0);
-        artileMapper.saveArtileTypl(articleTypes);
-    }
 
 }

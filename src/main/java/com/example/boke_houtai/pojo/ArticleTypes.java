@@ -1,36 +1,34 @@
 package com.example.boke_houtai.pojo;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
 /**
  * 文章类型
  */
+@Component
 public class ArticleTypes implements Serializable {
 
-    private  Integer ID;
-
-    private  String ArticleTypeName; //文章分类名称
-
+    private  Integer id;
+    private  String articleTypeName; //文章分类名称
     private  String describ; //描述
-
-    private  Integer  parentCategory ;  //父级分类
-
     private  Integer state;  //状态  1：可用 /0不可用
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getArticleTypeName() {
-        return ArticleTypeName;
+        return articleTypeName;
     }
 
     public void setArticleTypeName(String articleTypeName) {
-        ArticleTypeName = articleTypeName;
+        this.articleTypeName = articleTypeName;
     }
 
     public String getDescrib() {
@@ -41,13 +39,6 @@ public class ArticleTypes implements Serializable {
         this.describ = describ;
     }
 
-    public Integer getParentCategory() {
-        return parentCategory;
-    }
-
-    public void setParentCategory(Integer parentCategory) {
-        this.parentCategory = parentCategory;
-    }
 
     public Integer getState() {
         return state;

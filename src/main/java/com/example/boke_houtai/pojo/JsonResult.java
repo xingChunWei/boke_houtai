@@ -4,7 +4,7 @@ public class JsonResult {
 
     private Object obj;
 
-    private  Integer code;
+    private  Integer code=200;
 
     private  String msg;
 

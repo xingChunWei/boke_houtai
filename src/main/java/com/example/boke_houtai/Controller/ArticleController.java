@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author XingChunWei
  * @ddata 2019-2-28 下午13:45
  */
-@Controller
+@RestController
 @RequestMapping("/article")
 public class ArticleController {
 
@@ -36,13 +37,12 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/saveTypes")
-    @ResponseBody
     public JsonResult saveArtileTypes(ArticleTypes types) {
         JsonResult jsonResult = new JsonResult();
         try {
+            types.setState(0);//默认状态为0
             articleService.saveArticleTypl(types);
             logger.info("文章分类添加成功");
-            jsonResult.setCode(200);
             return jsonResult;
         } catch (Exception e) {
             e.getStackTrace();
@@ -53,18 +53,53 @@ public class ArticleController {
 
     }
 
-    /**
-     * 查询文章类型
+   /**
+     * 查询文章类型唯一
      *
      * @param
      */
     @RequestMapping("/findArticleTypes")
-    @ResponseBody
-    public JsonResult findArticleTypes() {
+    public JsonResult findArticleTypes(ArticleTypes articleTypes) {
         JsonResult jsonResult = new JsonResult();
-        List<ArticleTypes> articleTypeslist = articleService.findAll();
-        jsonResult.setObj(articleTypeslist);
+        List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
+        if (articleTypeslist.size()!=0){
+            jsonResult.setCode(300);
+        }
+
         return jsonResult;
+    }
+
+    /**
+     * 修改文章分类状态
+     * @param articleTypes
+     */
+    @RequestMapping("/updateState")
+    public void updateState(ArticleTypes articleTypes) {
+
+        try {
+            articleService.updataState(articleTypes);
+            logger.info("文章分类修改状态成功");
+        } catch (Exception e) {
+            e.getStackTrace();
+            logger.info("文章分类修改状态失败");
+        }
+
+    }
+
+    /**
+     * 删除文章分类
+     * @param id
+     */
+    @RequestMapping("/delArticleType")
+    public  void  delArticleType(int id){
+        try{
+            articleService.delArticleType(id);
+            logger.info("刪除分类成功");
+        }catch (Exception e){
+            e.getStackTrace();
+            logger.info("刪除分类失败");
+        }
+
     }
 
 }
