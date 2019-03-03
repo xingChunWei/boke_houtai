@@ -10,6 +10,9 @@
     <select id="findAll" parameterType="com.example.boke_houtai.pojo.ArticleTypes" resultType="com.example.boke_houtai.pojo.ArticleTypes">
         select * from articletypes
 <where>
+<if test="id!=null">
+    and id=#{id}
+</if>
     <if test="articleTypeName !=null and articleTypeName!=''">
         and articleTypeName = #{articleTypeName};
     </if>
@@ -17,6 +20,13 @@
 
     </select>
 
+    <select id="findAllPage" parameterType="int" resultType="com.example.boke_houtai.pojo.ArticleTypes">
+    select * from articletypes limit #{start},#{end}
+    </select>
+   <!-- 统计总条数-->
+    <select id="findCount" resultType="int">
+        select  count(id) from articletypes;
+    </select>
     <!--修改文章分类状态-->
     <update id="updataState" parameterType="com.example.boke_houtai.pojo.ArticleTypes">
         update articletypes set state=#{state} where id=#{id};
@@ -25,4 +35,18 @@
     <delete id="delArticleType" parameterType="int">
         delete  from articletypes where id=#{id};
     </delete>
+       <!-- 删除多个-->
+    <delete id="delArray" parameterType="map">
+        delete  from articletypes where id in
+        <foreach collection="ids" index="index" open="(" separator=","  close=")"   item="id">
+              ${id}
+        </foreach>
+    </delete>
+
+    <update id="updataArticle" parameterType="com.example.boke_houtai.pojo.ArticleTypes">
+        update articletypes set
+            articleTypeName = #{articleTypeName},
+        describ=#{describ}
+    where id=#{id}
+    </update>
 </mapper>

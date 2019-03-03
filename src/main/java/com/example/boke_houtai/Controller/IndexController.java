@@ -2,6 +2,7 @@ package com.example.boke_houtai.Controller;
 
 import com.example.boke_houtai.pojo.ArticleTypes;
 import com.example.boke_houtai.service.ArticleService;
+import com.example.boke_houtai.utils.PageUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,10 +101,11 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/wzfl")
-    public String wzfl(HttpServletRequest request) {
-        List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());
+    public String wzfl(HttpServletRequest request, PageUtils pageUtils) {
+       /* List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());*/
+      PageUtils pageUtils1 =   articleService.findAll(pageUtils);
         logger.info("查处结果");
-        request.setAttribute("articleTypes", articleTypes);
+        request.setAttribute("pageUtils1", pageUtils1);
         return "wz_fl";
     }
 

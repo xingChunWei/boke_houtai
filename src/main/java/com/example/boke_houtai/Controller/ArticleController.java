@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -53,7 +55,7 @@ public class ArticleController {
 
     }
 
-   /**
+    /**
      * 查询文章类型唯一
      *
      * @param
@@ -62,7 +64,7 @@ public class ArticleController {
     public JsonResult findArticleTypes(ArticleTypes articleTypes) {
         JsonResult jsonResult = new JsonResult();
         List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
-        if (articleTypeslist.size()!=0){
+        if (articleTypeslist.size() != 0) {
             jsonResult.setCode(300);
         }
 
@@ -70,7 +72,23 @@ public class ArticleController {
     }
 
     /**
+     * 查询文章类型
+     *
+     * @param articleTypes
+     */
+    @RequestMapping("/findArticle")
+    public JsonResult findArticle( ArticleTypes articleTypes) {
+        JsonResult jsonResult = new JsonResult();
+        List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
+        if (articleTypeslist.size() != 0) {
+            jsonResult.setObj(articleTypeslist.get(0));
+        }
+        return jsonResult;
+    }
+
+    /**
      * 修改文章分类状态
+     *
      * @param articleTypes
      */
     @RequestMapping("/updateState")
@@ -88,18 +106,52 @@ public class ArticleController {
 
     /**
      * 删除文章分类
+     *
      * @param id
      */
     @RequestMapping("/delArticleType")
-    public  void  delArticleType(int id){
-        try{
+    public void delArticleType(int id) {
+        try {
             articleService.delArticleType(id);
             logger.info("刪除分类成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             logger.info("刪除分类失败");
         }
 
     }
 
+    /**
+     * 删除多个
+     *
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/delArray")
+    public JsonResult delArray(@RequestParam(value = "ids[]") Integer[] ids) {
+        JsonResult jsonResult = new JsonResult();
+        try {
+            articleService.delArray(ids);
+        } catch (Exception e) {
+            e.getStackTrace();
+            jsonResult.setCode(300);
+        }
+        return jsonResult;
+    }
+
+    /**
+     * 修改文章类型
+     * @param articleTypes
+     */
+    @RequestMapping("/updataArticle")
+    public JsonResult updataArticle(ArticleTypes articleTypes){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            articleService.updataArticle(articleTypes);
+        }catch (Exception e){
+            e.getStackTrace();
+            jsonResult.setCode(300);
+        }
+        return jsonResult;
+    }
 }
