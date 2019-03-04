@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 文章Mappper
+ * 文章类型Mappper
  * @author  XingChunWei
  * @date   2019-2-28 下午13:50
  */
@@ -23,7 +23,8 @@ public interface ArticleTypesMapper {
 
  /**
   * 分页
-  * @param page
+  * @param start
+  * @param end
   * @return
   */
  public List<ArticleTypes> findAllPage(int start, int end);

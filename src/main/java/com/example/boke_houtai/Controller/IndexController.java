@@ -1,7 +1,6 @@
 package com.example.boke_houtai.Controller;
 
-import com.example.boke_houtai.pojo.ArticleTypes;
-import com.example.boke_houtai.service.ArticleService;
+import com.example.boke_houtai.service.ArticleTypeService;
 import com.example.boke_houtai.utils.PageUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 博客后台页面相关跳转
@@ -24,7 +22,7 @@ public class IndexController {
 
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Autowired
-    private ArticleService articleService;
+    private ArticleTypeService articleService;
 
     /**
      * 登录
@@ -107,6 +105,22 @@ public class IndexController {
         logger.info("查处结果");
         request.setAttribute("pageUtils1", pageUtils1);
         return "wz_fl";
+    }
+
+    /**
+     * 文件上传
+     * @return
+     */
+    @RequestMapping("/file_manager_json")
+    public String uplo(){
+
+        return "file_manager_json";
+    }
+
+    @RequestMapping("/upload_json")
+    public String uploHuiX(){
+
+        return "upload_json";
     }
 
 }

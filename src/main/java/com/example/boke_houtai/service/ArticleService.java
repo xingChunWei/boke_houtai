@@ -1,23 +1,8 @@
 package com.example.boke_houtai.service;
 
-import com.example.boke_houtai.pojo.ArticleTypes;
-import com.example.boke_houtai.utils.PageUtils;
-
-import java.util.List;
+import com.example.boke_houtai.pojo.Article;
 
 public interface ArticleService {
 
-    void  saveArticleTypl(ArticleTypes types);
-
-    List<ArticleTypes> findAll(ArticleTypes types);
-
-    PageUtils findAll(PageUtils types);
-
-    void  updataState(ArticleTypes articleTypes);
-
-    void  delArticleType(int id);
-
-    void  delArray(Integer[] ids);
-
-    void  updataArticle(ArticleTypes articleTypes);
+    void  saveArticle(Article article);
 }

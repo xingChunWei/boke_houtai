@@ -1,27 +1,28 @@
 package com.example.boke_houtai.pojo;
 
+import java.util.Date;
+
 /**
  *文章实体
  */
 public class Article {
 
-    private  String ID;
+    private  String id;
     private  String  title;//标题
-    private  String conrent;//内容
+    private  String content;//内容
     private  String  founder;//创建人
-    private  String creationTime;//创建时间
-    private  String alterTime;//修改时间
-    private  String articleType;//类型
+    private  Date creationTime;//创建时间
+    private Date alterTime;//修改时间
     private  String readNumber;//文章阅读量
-    private  String Like;   //文章点赞量
-    private  String printUrl; //图片路径
+    private  String like;   //文章点赞量
+    private  Integer a_id; //外键文章类型
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -32,12 +33,12 @@ public class Article {
         this.title = title;
     }
 
-    public String getConrent() {
-        return conrent;
+    public String getContent() {
+        return content;
     }
 
-    public void setConrent(String conrent) {
-        this.conrent = conrent;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getFounder() {
@@ -48,28 +49,20 @@ public class Article {
         this.founder = founder;
     }
 
-    public String getCreationTime() {
+    public Date getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(String creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
     }
 
-    public String getAlterTime() {
+    public Date getAlterTime() {
         return alterTime;
     }
 
-    public void setAlterTime(String alterTime) {
+    public void setAlterTime(Date alterTime) {
         this.alterTime = alterTime;
-    }
-
-    public String getArticleType() {
-        return articleType;
-    }
-
-    public void setArticleType(String articleType) {
-        this.articleType = articleType;
     }
 
     public String getReadNumber() {
@@ -81,18 +74,18 @@ public class Article {
     }
 
     public String getLike() {
-        return Like;
+        return like;
     }
 
     public void setLike(String like) {
-        Like = like;
+        this.like = like;
     }
 
-    public String getPrintUrl() {
-        return printUrl;
+    public Integer getA_id() {
+        return a_id;
     }
 
-    public void setPrintUrl(String printUrl) {
-        this.printUrl = printUrl;
+    public void setA_id(Integer a_id) {
+        this.a_id = a_id;
     }
 }

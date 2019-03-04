@@ -225,7 +225,7 @@
         if(bolon){
             $.ajax({
                 type:'POST',
-                url:'/article/saveTypes',
+                url:'/articleType/saveTypes',
                 data:{'articleTypeName':articleTypeName,'describ':describ},
                 success:function (data) {
                     if (data.code ==200){
@@ -247,7 +247,7 @@
         if(bolon){
             $.ajax({
                 type:'POST',
-                url:'/article/updataArticle',
+                url:'/articleType/updataArticle',
                 data:{'id':bl,'articleTypeName':articleTypeName,'describ':describ},
                 success:function (data) {
                     if (data.code =='200'){
@@ -263,7 +263,7 @@
     function  updateState(id,state) {
         $.ajax({
             type:'GET',
-            url:'/article/updateState',
+            url:'/articleType/updateState',
             data:{'id':id,'state':state},
             success:function () {
                 location.href=location.href;
@@ -276,7 +276,7 @@
         if(r==true){
             $.ajax({
                 type:'GET',
-                url:'/article/delArticleType',
+                url:'/articleType/delArticleType',
                 data:{'id':id},
                 success:function () {
                     location.href=location.href;
@@ -289,7 +289,7 @@
   function  findArticle(id){
       $.ajax({
           type:'GET',
-          url:'/article/findArticle',
+          url:'/articleType/findArticle',
           data:{'id':id},
           datatype:'json',
           success:function (data) {
@@ -313,12 +313,11 @@
 
     //查询文章分类唯一
     function findOne() {
-        debugger
-       var articleTypeName = $("#articleTypeName").val().trim()
-        if (articleTypeName=null || articleTypeName!=""){
+       var articleTypeName = $("#articleTypeName").val();
+        if (articleTypeName!=null || articleTypeName!=""){
             $.ajax({
                 type:'GET',
-                url:'/article/findArticleTypes',
+                url:'/articleType/findArticleTypes',
                 data:{'articleTypeName':articleTypeName},
                 datatype:'json',
                 success:function (data) {
@@ -337,24 +336,22 @@
 
     //查询文章分类唯一
     function findOne1() {
-        debugger
         var articleTypeName = $("#articleTypeName1").val().trim()
         if ((articleTypeName!=null || articleTypeName!="")&& articleName !=articleTypeName){
             $.ajax({
                 type:'GET',
-                url:'/article/findArticleTypes',
+                url:'/articleType/findArticleTypes',
                 data:{'articleTypeName':articleTypeName},
                 datatype:'json',
                 success:function (data) {
                     if (data.code!='200'){
-                        $("#articleTypeName").attr('data-content','类型已存在')
-                        $("#articleTypeName").popover('show');
+                        $("#articleTypeName1").attr('data-content','类型已存在')
+                        $("#articleTypeName1").popover('show');
                         bolon=false;
                     }else{
                         bolon=true;
                     }
                 }
-
             })
         }else{
             alert("名称相同")
@@ -362,7 +359,6 @@
     }
 
     /*批量删除*/
-
     function delAll() {
         var arr = new Array();
         $(".checkbox input[type='checkbox']:checked").each(function (i) {
@@ -370,7 +366,7 @@
         })
         $.ajax({
             type:'POST',
-            url:'/article/delArray',
+            url:'/articleType/delArray',
             data:{"ids":arr},
             success:function (data) {
                   if (data.code=='200'){
@@ -379,9 +375,4 @@
             }
         });
     }
-
-    function ac() {
-       /* $(this).attr('class',active);*/
-    }
-
 </script>

@@ -78,6 +78,8 @@
 .wz_fl_xz {
     width: 150px;
     height: 30px;
+    text-align: center;
+    font-size: 13px;
 }
 
 .wz_fl_input {

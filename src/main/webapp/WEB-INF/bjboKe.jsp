@@ -24,11 +24,8 @@
         <tr>
             <td>文章分类：</td>
             <td>
-                <select name="cars" class="wz_fl_xz">
+                <select name="a_id" class="wz_fl_xz" id="articleType" >
                 <option value="#">文章分类</option>
-                <option value="saab">Spring</option>
-                <option value="fiat">mybatis</option>
-                <option value="audi">tomcat</option>
                 </select>
             </td>
         </tr>
@@ -51,7 +48,7 @@
                 文章标题：
             </td>
             <td>
-                <input type="text" class="wz_fl_input">
+                <input type="text" class="wz_fl_input" name="title" id="title">
             </td>
         </tr>
         <tr>
@@ -67,35 +64,74 @@
         <tr>
             <td colspan="2">
                 <div style="margin-left: 400px">
-                    <button  class="btn btn-primary">发布</button>
+                    <button  class="btn btn-primary" onclick="submi()">发布</button>
                 </div>
             </td>
         </tr>
     </table>
-<%--<div class="wz_fl_bt" >
-
-
-</div>
-<div class="wz_fl_bt">
-
-</div>
-
-    <div class="wz_fl_bt">
-
-    </div>
-
-
-
-<div style="padding: 20px">
-    <div></div>
-
-</div>--%>
-
 </div>
 </body>
 <script>
-    KindEditor.ready(function (K) {
-        window.editor = K.create('#editor_id');
+
+
+    KindEditor.ready(function(K){
+
+        window.editor=K.create('#editor_id', {
+            uploadJson : '/upload/fileUpload',
+            fileManagerJson : '/index/jsp/file_manager_json',
+            allowFileManager : true,
+            afterCreate : function() {
+                var self = this;
+                K.ctrl(document, 13, function() {
+                    self.sync();
+                    document.forms['example'].submit();
+                });
+                K.ctrl(self.edit.doc, 13, function() {
+                    self.sync();
+                    document.forms['example'].submit();
+                });
+            }
+        });
+
     });
+
+
+
+</script>
+
+<script>
+    $(function () {
+        /**
+         * 追加文章分类
+         */
+        $.ajax({
+            type:'POST',
+            url:'/articleType/findAllArticle',
+            datatype:'json',
+            success:function (data) {
+                debugger
+                var str=''
+
+                for (var i = 0;i<data.obj.length;i++){
+                    str+='<option value='+data.obj[i].id+'>'+data.obj[i].articleTypeName+'</option>'
+                }
+                $("#articleType").append(str);
+            }
+        })
+    })
+
+    function submi() {
+        $.ajax({
+            type:'POST',
+            url:'/article/saveArticle',
+            data:{'title':$("#title").val().trim(),'content':editor.html(),'a_id':$("#articleType").val()},
+            success:function (data) {
+                if (data.code == '200'){
+                    location.href = location.href;
+                }
+            }
+        });
+    }
+
 </script>
 </html>
