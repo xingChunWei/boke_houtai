@@ -1,5 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -17,137 +19,138 @@ pageEncoding="UTF-8"%>
 <body>
 
 <div class="mai">
-<div>
-<table class="table table-hover">
-    <caption>博客文章管理</caption>
+    <div>
+        <table class="table table-hover">
+            <caption>博客文章管理</caption>
 
 
-    <caption>
-        <div class="btn-group col-lg-3 col-md-3">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
-        </div>
+            <caption>
+                <div class="btn-group col-lg-3 col-md-3">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        文章分类 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="articleTypes">
+                    </ul>
+                </div>
 
-        <%----------------------------搜索------------------------------%>
-            <div class="col-lg-3 col-md-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="">
-                    <span class="input-group-btn">
+                <%----------------------------搜索------------------------------%>
+                <div class="col-lg-3 col-md-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="">
+                        <span class="input-group-btn">
         <button class="btn btn-default" type="button">搜索</button>
       </span>
-                </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-    </caption>
-    <thead>
-    <tr>
-        <th>序号</th>
-        <th>文章分类</th>
-        <th>文章标题</th>
-        <th>文章类型</th>
-        <th>发布时间</th>
-        <th>浏览量</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>1</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>Tanmay</td>
-        <td>Bangalore</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td>560001</td>
-        <td><button type="button" class="btn btn-info">查看</button>
-            <button type="button" class="btn btn-primary">修改</button>
-            <button type="button" class="btn btn-danger">删除</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</div>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </caption>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>文章分类</th>
+                <th>文章标题</th>
+                <th>发布时间</th>
+                <th>浏览量</th>
+                <th>点赞</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
 
-   <%------------------------- 分页 -----------------------%>
-<div>
-    <nav aria-label="...">
-        <ul class="pagination" style="display: table;margin: 40px auto">
-            <li><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li class="disabled"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
-        </ul>
-    </nav>
-</div>
+            <c:forEach varStatus="i" var="article" items="${pageUtils1.objList}">
+                <tr>
+                    <td>${i.count}</td>
+                    <td>${article.articleTypes.articleTypeName}</td>
+                    <td>${article.title}</td>
+                    <td><fmt:formatDate value="${article.creationTime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                    </td>
+                    <td>${article.readNumber}</td>
+                    <td>${article.likes}</td>
+                    <td>
+                        <button type="button" class="btn btn-info"><a href="/article/wZText?id=${article.id}" target="_blank">查看</a></button>
+                        <button type="button" class="btn btn-primary" onclick="tiaozhuan('${article.id}')">修改</button>
+                        <button type="button" class="btn btn-danger" onclick="delArticle('${article.id}')">删除</button>
+                    </td>
+                </tr>
+            </c:forEach>
+
+            </tbody>
+        </table>
+    </div>
+
+    <%------------------------- 分页 -----------------------%>
+    <div>
+        <nav aria-label="...">
+            <ul class="pagination" style="display: table;margin: 40px auto">
+                <c:if test="${pageUtils1.currentPage==1}">
+                    <li><a href="javascript:void(0)">&laquo;</a></li>
+                </c:if>
+                <c:if test="${pageUtils1.currentPage!=1}">
+                    <li><a href="/index/wzgl?currentPage=${pageUtils1.currentPage-1}">&laquo;</a></li>
+                </c:if>
+
+                <c:forEach  var="i"  begin="1" end="${pageUtils1.countPage}">
+                    <li><a href="/index/wzgl?currentPage=${i}">${i}</a></li>
+                </c:forEach>
+
+
+                <c:if test="${pageUtils1.currentPage==pageUtils1.countPage}">
+                    <li><a href="javascript:void(0)">&raquo;</a></li>
+                </c:if>
+                <c:if test="${pageUtils1.currentPage!=pageUtils1.countPage}">
+                    <li><a href="/index/wzgl?currentPage=${pageUtils1.currentPage+1}">&raquo;</a></li>
+                </c:if>
+
+            </ul>
+        </nav>
+    </div>
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    $(function () {
+        //文章分类
+        flgl();
+
+
+    });
+
+    function flgl() {
+        $.ajax({
+            type: "GET",
+            url: '/articleType/findAllArticle',
+            dataType: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.obj.length; i++) {
+                    $("#articleTypes").append('<li><a href=/index/wzgl?aId=' + data.obj[i].id + '>' + data.obj[i].articleTypeName + '</a></li>')
+                }
+            }
+        });
+    }
+
+    //删除
+    function delArticle(id) {
+        var bl = confirm("确定删除？")
+        if(bl){
+            $.ajax({
+                type:'GET',
+                url:'/article/updateArticle',
+                data:{'id': id,'state': 2},
+                dataType:'json',
+                success:function (data) {
+                    if (data.code=='200'){
+                        location.href = location.href;
+                    } else {
+                        alert('删除失败');
+                    }
+                }
+            })
+        }
+
+    }
+
+    function tiaozhuan(id) {
+        location.href='/index/bjboKe?id='+id
+    }
+
+</script>

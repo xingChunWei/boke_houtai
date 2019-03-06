@@ -121,3 +121,52 @@
     border-radius: 10px;
 }
 
+/*预览博客文章*/
+
+
+.wZText_mai {
+    width: 1200px;
+    height: auto;
+    margin-left:auto;
+    margin-right:auto;
+}
+.wz_text_bt {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: normal;
+
+}
+
+.wz_text_xx {
+    width: 90%;
+    height: 35px;
+    border: 1px dashed #c0c0c0;
+    margin: auto;
+    font-size: 16px;
+    text-align: center;
+    line-height: 35px;
+    color: #8c8c8c;
+}
+
+.wz_text_xx_kg {
+    width: 30px;
+    height: auto;
+    display: inline-block;
+
+}
+
+.wz_text_font {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-top: 2px solid #8c8c8c;
+    margin-top: 20px;
+    border-bottom: 2px solid #8c8c8c;
+    font-size: 18px;
+    line-height: normal;
+}
+

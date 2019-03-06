@@ -30,7 +30,7 @@
             </td>
         </tr>
 
-        <tr>
+       <%-- <tr>
             <td>
                 文章类型：
             </td>
@@ -42,7 +42,7 @@
                     <option value="audi">翻译</option>
                 </select>
             </td>
-        </tr>
+        </tr>--%>
         <tr>
             <td>
                 文章标题：
@@ -58,26 +58,28 @@
             <td>
                 <%-------------------富文本编辑器----------------------------%>
                 <textarea id="editor_id" name="content" cols="100" rows="8"
-                          style="width:800px;height:500px;visibility:hidden;font-size: 14px"></textarea>
+                          style="width:800px;height:800px;visibility:hidden;font-size: 14px"></textarea>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <div style="margin-left: 400px">
-                    <button  class="btn btn-primary" onclick="submi()">发布</button>
+                    <button  class="btn btn-primary" onclick="submi(1)">发布</button>
+                    <button  class="btn btn-primary" onclick="submi(0)">草稿</button>
                 </div>
             </td>
         </tr>
     </table>
 </div>
+<input type="hidden" name="flt" value="${id}" id="flt">
 </body>
-<script>
+<script type="text/javascript" defer="defer">
 
 
     KindEditor.ready(function(K){
 
         window.editor=K.create('#editor_id', {
-            uploadJson : '/upload/fileUpload',
+            uploadJson : '/upload/fileUpload',  //图片上传路径
             fileManagerJson : '/index/jsp/file_manager_json',
             allowFileManager : true,
             afterCreate : function() {
@@ -107,9 +109,9 @@
         $.ajax({
             type:'POST',
             url:'/articleType/findAllArticle',
-            datatype:'json',
+            dataType:'json',
+            data:{'state':1},
             success:function (data) {
-                debugger
                 var str=''
 
                 for (var i = 0;i<data.obj.length;i++){
@@ -118,19 +120,33 @@
                 $("#articleType").append(str);
             }
         })
+
+        hx();
     })
 
-    function submi() {
+    function submi(state) {
+        var $state = state;
         $.ajax({
             type:'POST',
             url:'/article/saveArticle',
-            data:{'title':$("#title").val().trim(),'content':editor.html(),'a_id':$("#articleType").val()},
+            data:{'title':$("#title").val().trim(),'content':editor.html(),'aId':$("#articleType").val(),'state':$state},
             success:function (data) {
                 if (data.code == '200'){
+                    if ($state=='1'){
+                        alert("发布成功")
+                    } else {
+                        alert("保存草稿成功")
+                    }
+
                     location.href = location.href;
                 }
             }
         });
+    }
+
+    function hx() {
+      var id =  $("#flt").val();
+      alert(id)
     }
 
 </script>

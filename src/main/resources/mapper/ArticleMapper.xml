@@ -2,8 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.boke_houtai.dao.ArticleMapper">
 
-    <insert id="saveArticle" parameterType="Article">
-          inset into article (id,title,content,founder,creationTime,alterTime,readNumber,like,a_id)
-          values (#{id},#{title},#{content},#{founder},#{creationTime},#{alterTime},#{readNumber},#{like},${a_id});
+    <insert id="saveArticle" parameterType="com.example.boke_houtai.pojo.Article">
+          insert into article (id,title,content,founder,creationTime,a_id,state)
+          values (#{id},#{title},#{content},#{founder},#{creationTime},${aId},#{state});
     </insert>
+
+
+    <resultMap id="selectArticleAndArticleTypes" type="com.example.boke_houtai.pojo.Article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="founder" property="founder"/>
+        <result column="creationTime" property="creationTime"/>
+        <result column="readNumber" property="readNumber"/>
+        <result column="likes" property="likes"/>
+        <result column="a_id" property="aId"/>
+        <result column="state" property="state"/>
+        <association property="articleTypes" javaType="com.example.boke_houtai.pojo.ArticleTypes">
+            <id column="tid" property="id"/>
+            <result column="articleTypeName" property="articleTypeName"/>
+        </association>
+
+    </resultMap>
+   <!-- 分页查询-->
+<select id="findAllArticle" parameterType="int" resultMap="selectArticleAndArticleTypes">
+          select a.id, a.title ,a.content,a.founder,a.creationTime,a.readNumber,a.likes,a.a_id,t.id tid,t.articleTypeName from  article a inner join articletypes t on a.a_id = t.id  where a.state=${state} limit ${start},${end}
+</select>
+    <!--单一文章分类-->
+    <select id="findAllArticleAid" parameterType="int" resultMap="selectArticleAndArticleTypes">
+        select a.id, a.title ,a.content,a.founder,a.creationTime,a.readNumber,a.likes,a.a_id,t.id tid,t.articleTypeName from  article a inner join articletypes t on a.a_id = t.id  where a.state=${state} and a.a_id = ${aId} limit ${start},${end}
+    </select>
+
+    <!--统计个数-->
+    <select id="findCount" parameterType="Article" resultType="int">
+        select count(id) from article
+        <where>
+            <if test="state!=null">
+              and state=#{state}
+            </if>
+          <if test="aId !=null">
+              and a_id=#{aId}
+          </if>
+        </where>
+;
+    </select>
+
+    <!--查看博客-->
+    <select id="findOne" parameterType="java.lang.String" resultType="Article">
+      select * from article where id =#{id};
+    </select>
+
+    <update id="updatetArticle" parameterType="Article" >
+        update  article
+                   <trim prefix="set" suffixOverrides=",">
+
+                    <if test="title!=''and title!=null">
+                        title=#{title},
+                    </if>
+                       <if test="content!=''and content!=null">
+                           content=#{content},
+                       </if>
+
+                       <if test="aId!=null">
+                           a_id=#{aId},
+                       </if>
+                       <if test="alterTime!=null">
+                           alterTime=#{alterTime},
+                       </if>
+                       <if test="state!=null">
+                           state=#{state},
+                       </if>
+
+                   </trim>
+
+          where  id=#{id};
+
+    </update>
 </mapper>

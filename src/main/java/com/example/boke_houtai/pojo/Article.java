@@ -1,5 +1,8 @@
 package com.example.boke_houtai.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -11,11 +14,16 @@ public class Article {
     private  String  title;//标题
     private  String content;//内容
     private  String  founder;//创建人
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private  Date creationTime;//创建时间
     private Date alterTime;//修改时间
     private  String readNumber;//文章阅读量
-    private  String like;   //文章点赞量
-    private  Integer a_id; //外键文章类型
+    private  String likes;   //文章点赞量
+    private  Integer aId; //外键文章类型
+    private Integer state;  //状态:2 回收站，1 已发布 ，0：草稿
+
+    private  ArticleTypes articleTypes;
 
     public String getId() {
         return id;
@@ -73,19 +81,35 @@ public class Article {
         this.readNumber = readNumber;
     }
 
-    public String getLike() {
-        return like;
+    public String getLikes() {
+        return likes;
     }
 
-    public void setLike(String like) {
-        this.like = like;
+    public void setLikes(String likes) {
+        this.likes = likes;
     }
 
-    public Integer getA_id() {
-        return a_id;
+    public Integer getaId() {
+        return aId;
     }
 
-    public void setA_id(Integer a_id) {
-        this.a_id = a_id;
+    public void setaId(Integer aId) {
+        this.aId = aId;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public ArticleTypes getArticleTypes() {
+        return articleTypes;
+    }
+
+    public void setArticleTypes(ArticleTypes articleTypes) {
+        this.articleTypes = articleTypes;
     }
 }

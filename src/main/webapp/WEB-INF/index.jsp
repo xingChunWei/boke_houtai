@@ -34,11 +34,15 @@
                     <h2 onclick="tz('/index/bjboKe')">编辑博客</h2>
                 </li>
                 <li>
+                    <h2 onclick="tz('/index/wzfl')">文章分类</h2>
+                </li>
+                <li>
                     <h2 onclick="tz('/index/wzgl')">文章管理</h2>
                 </li>
                 <li>
-                    <h2 onclick="tz('/index/wzfl')">文章分类</h2>
+                    <h2 onclick="tz('/index/wzcg')">草稿箱</h2>
                 </li>
+
                 <li>
                     <h2 onclick="tz('/index/wzly')">留言</h2>
                 </li>

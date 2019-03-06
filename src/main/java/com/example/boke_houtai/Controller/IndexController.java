@@ -1,5 +1,7 @@
 package com.example.boke_houtai.Controller;
 
+import com.example.boke_houtai.pojo.Article;
+import com.example.boke_houtai.service.ArticleService;
 import com.example.boke_houtai.service.ArticleTypeService;
 import com.example.boke_houtai.utils.PageUtils;
 import org.slf4j.Logger;
@@ -7,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,7 +23,10 @@ public class IndexController {
 
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
     @Autowired
-    private ArticleTypeService articleService;
+    private ArticleTypeService articleTypeService;
+
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * 登录
@@ -55,8 +59,8 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/bjboKe")
-    public String bjboKe() {
-
+    public String bjboKe(HttpServletRequest request,String id) {
+       request.setAttribute("id",id);
         return "bjboKe";
     }
 
@@ -66,8 +70,12 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/wzgl")
-    public String wzgl() {
+    public String wzgl(HttpServletRequest request, PageUtils pageUtils, Article article) {
 
+        //发布文章状态
+        article.setState(1);
+        PageUtils pageUtils1 = articleService.findAllArticle(pageUtils,article);
+        request.setAttribute("pageUtils1",pageUtils1);
         return "wz_gl";
     }
 
@@ -101,7 +109,7 @@ public class IndexController {
     @RequestMapping("/wzfl")
     public String wzfl(HttpServletRequest request, PageUtils pageUtils) {
        /* List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());*/
-      PageUtils pageUtils1 =   articleService.findAll(pageUtils);
+      PageUtils pageUtils1 =   articleTypeService.findAll(pageUtils);
         logger.info("查处结果");
         request.setAttribute("pageUtils1", pageUtils1);
         return "wz_fl";
@@ -123,4 +131,13 @@ public class IndexController {
         return "upload_json";
     }
 
+    /**
+     * 草稿
+     * @return
+     */
+    @RequestMapping("wzcg")
+    public  String wzcg(){
+
+        return "wz_cg";
+    }
 }

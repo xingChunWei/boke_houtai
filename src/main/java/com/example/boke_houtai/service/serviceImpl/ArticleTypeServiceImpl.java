@@ -65,13 +65,10 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     @Override
     public PageUtils findAll(PageUtils pageUtils){
-
-        //每页多少条数据
-        pageUtils.setPageSize(1);
         //数据总条数
         pageUtils.setCountSize(artileMapper.findCount());
         //总页数
-        double countPage = pageUtils.getCountSize()/pageUtils.getPageSize();
+        double countPage = (double) pageUtils.getCountSize()/pageUtils.getPageSize();
         pageUtils.setCountPage((int)Math.ceil(countPage));
         //起始位置
         int start = (pageUtils.getCurrentPage()-1)*pageUtils.getPageSize();

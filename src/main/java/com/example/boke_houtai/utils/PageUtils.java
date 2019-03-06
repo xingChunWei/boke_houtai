@@ -9,11 +9,10 @@ import java.util.List;
  */
 public class PageUtils<T> {
     private  int  currentPage=1; //当前页
-    private  int  pageSize ;  //每页条数
+    private  int  pageSize=10 ;  //每页条数
     private  int  countSize; //总条数
     private  int countPage;  //总页数
     private List<T> objList;  //内容
-
 
     public int getCurrentPage() {
         return currentPage;
