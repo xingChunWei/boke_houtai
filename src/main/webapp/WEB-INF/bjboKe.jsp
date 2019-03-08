@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
@@ -24,8 +25,11 @@
         <tr>
             <td>文章分类：</td>
             <td>
-                <select name="a_id" class="wz_fl_xz" id="articleType" >
+                <select name="a_id" class="wz_fl_xz"  id="articleType" >
                 <option value="#">文章分类</option>
+                    <c:forEach var=" " items="">
+                        <option value="#">文章分类</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>
@@ -121,6 +125,7 @@
             }
         })
 
+        //获得传进来的文章Id
         hx();
     })
 
@@ -146,7 +151,18 @@
 
     function hx() {
       var id =  $("#flt").val();
-      alert(id)
+      debugger
+        $.ajax({
+            type:'GET',
+            url:'/article/findOne',
+            data:{'id':id},
+            dataType:'json',
+            success:function (data) {
+                $("#title").val(data.obj.title);
+                $("articleType").val(data.obj.aId);
+                editor.text("editor_id",data.obj.content);
+            }
+        })
     }
 
 </script>

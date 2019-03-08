@@ -23,12 +23,13 @@ public class ArticleController {
 
     /**
      * 添加博客文章
+     *
      * @param article
      * @return
      */
     @RequestMapping("/saveArticle")
     @ResponseBody
-    public JsonResult saveArticle(Article article){
+    public JsonResult saveArticle(Article article) {
         JsonResult jsonResult = new JsonResult();
         article.setId(UUidUtils.getUUID());
         article.setCreationTime(new Date());
@@ -38,7 +39,7 @@ public class ArticleController {
 
         try {
             articleService.saveArticle(article);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             jsonResult.setCode(300);
         }
@@ -48,30 +49,42 @@ public class ArticleController {
 
     /**
      * 查看博客文章
+     *
      * @return
      */
     @RequestMapping("/wZText")
-    public String findOne(HttpServletRequest request,String id){
-       Article article =  articleService.findOne(id);
-       request.setAttribute("article",article);
+    public String findOne(HttpServletRequest request, String id) {
+        Article article = articleService.findOne(id);
+        request.setAttribute("article", article);
         return "wZText";
     }
 
     /**
      * 修改博客
+     *
      * @return
      */
     @RequestMapping("/updateArticle")
     @ResponseBody
-    public JsonResult updateArticle(Article article){
+    public JsonResult updateArticle(Article article) {
         JsonResult jsonResult = new JsonResult();
         try {
             articleService.updatetArticle(article);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             jsonResult.setCode(300);
         }
 
         return jsonResult;
+    }
+
+    @RequestMapping("/findOne")
+    public JsonResult findOne1(Article article) {
+        JsonResult jsonResult = new JsonResult();
+        Article article1 = articleService.findOne(article.getId());
+        jsonResult.setObj(article);
+
+        return jsonResult;
+
     }
 }

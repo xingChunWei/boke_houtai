@@ -59,8 +59,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/bjboKe")
-    public String bjboKe(HttpServletRequest request,String id) {
-       request.setAttribute("id",id);
+    public String bjboKe(HttpServletRequest request,Article article) {
         return "bjboKe";
     }
 

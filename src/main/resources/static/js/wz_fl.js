@@ -78,8 +78,9 @@ function  updateState(id,state) {
 }
 //删除文章分类
 function del(id) {
-    var r=confirm("确认删除？")
-    if(r==true){
+    layer.confirm('确定删除吗？', {
+        btn: ['确定','取消'] //按钮
+    }, function(){
         $.ajax({
             type:'GET',
             url:'/articleType/delArticleType',
@@ -88,7 +89,7 @@ function del(id) {
                 location.href=location.href;
             }
         })
-    }
+    });
 }
 
 //修改回显文章类型
@@ -166,6 +167,10 @@ function findOne1() {
 
 /*批量删除*/
 function delAll() {
+layer.confirm("确定删除吗？",{
+    btn:['确定','取消']
+},function(){
+
     var arr = new Array();
     $(".checkbox input[type='checkbox']:checked").each(function (i) {
         arr[i]=$(this).val();
@@ -180,4 +185,7 @@ function delAll() {
             }
         }
     });
+    });
+
+
 }

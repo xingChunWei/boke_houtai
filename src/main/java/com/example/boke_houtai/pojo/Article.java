@@ -6,24 +6,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- *文章实体
+ * 文章实体
  */
 public class Article {
 
-    private  String id;
-    private  String  title;//标题
-    private  String content;//内容
-    private  String  founder;//创建人
+    private String id;
+    private String title;//标题
+    private String content;//内容
+    private String founder;//创建人
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private  Date creationTime;//创建时间
+    private Date creationTime;//创建时间
     private Date alterTime;//修改时间
-    private  String readNumber;//文章阅读量
-    private  String likes;   //文章点赞量
-    private  Integer aId; //外键文章类型
-    private Integer state;  //状态:2 回收站，1 已发布 ，0：草稿
+    private String readNumber;//文章阅读量
+    private String likes;   //文章点赞量
+    private Integer aId; //外键文章类型
+    private Integer state;  //状态:2 回收站，1 已发布 ，0：草稿s
 
-    private  ArticleTypes articleTypes;
+    private ArticleTypes articleTypes;
 
     public String getId() {
         return id;

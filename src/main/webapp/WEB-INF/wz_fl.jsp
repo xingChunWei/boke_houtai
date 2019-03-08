@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 
     <script src="/js/wz_fl.js"></script>
+    <script src="/layer/layer.min.js"></script>
     <link rel="stylesheet" href="/css/one.css">
     <link rel="stylesheet" href="/css/ht_index.css">
 </head>
@@ -69,7 +70,7 @@
                             <button type="button" class="btn btn-warning" onclick="updateState(${type.id},0)">取消</button>
                         </c:if>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModa3" onclick="findA(${type.id})">编辑</button>
-                        <button type="button" class="btn btn-danger"  onclick="del(${type.id})" >删除</button>
+                        <button type="button" class="btn btn-danger"   onclick="del(${type.id})" >删除</button>
                        <%-- --%>
                     </td>
                 </tr>
@@ -170,10 +171,10 @@
                 <li><a href="javascript:void(0)">&laquo;</a></li>
             </c:if>
             <c:if test="${pageUtils.currentPage !=1}">
-                <li><a href="/index/wzfl?currentPage=${pageUtils.currentPage-1}">&laquo;</a></li>
+                <li ><a href="/index/wzfl?currentPage=${pageUtils.currentPage-1}">&laquo;</a></li>
             </c:if>
             <c:forEach var="i" begin="1" end="${pageUtils.countPage}">
-                <li ><a href="/index/wzfl?currentPage=${i}" onclick="ac()">${i}</a></li>
+                <li><a href="/index/wzfl?currentPage=${i}">${i}</a></li>
             </c:forEach>
             <%--class="active"--%>
 
@@ -188,8 +189,8 @@
         </ul>
     </nav>
 </div>
+<script>
 
-
-
+</script>
 </body>
 </html>
