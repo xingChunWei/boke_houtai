@@ -1,19 +1,23 @@
 package com.example.boke_houtai.pojo;
 
-public class JsonResult {
+import java.util.List;
 
-    private Object obj;
+public class JsonResult<T> {
 
-    private  Integer code=200;
+    private List<T> data;
+
+    private  Integer code=0;
 
     private  String msg;
 
-    public Object getObj() {
-        return obj;
+    private Integer count;
+
+    public List<T> getData() {
+        return data;
     }
 
-    public void setObj(Object obj) {
-        this.obj = obj;
+    public void setData(List<T> data) {
+        this.data = data;
     }
 
     public Integer getCode() {
@@ -30,5 +34,13 @@ public class JsonResult {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 博客后台页面相关跳转
@@ -33,13 +36,30 @@ public class IndexController {
      *
      * @param
      * @return
-     */
+     *//*
     @RequestMapping("/login")
     public String getlogin() {
 
 
         return "login";
 
+    }*/
+    @RequestMapping("/main")
+    public String getMain() {
+
+        return "main";
+    }
+
+    @RequestMapping("/error")
+    public String error() {
+
+        return "error";
+    }
+
+    @RequestMapping("/linksList")
+    public String getLinksList() {
+
+        return "linksList";
     }
 
     /**
@@ -59,7 +79,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/bjboKe")
-    public String bjboKe(HttpServletRequest request,Article article) {
+    public String bjboKe(HttpServletRequest request, Article article) {
         return "bjboKe";
     }
 
@@ -73,8 +93,8 @@ public class IndexController {
 
         //发布文章状态
         article.setState(1);
-        PageUtils pageUtils1 = articleService.findAllArticle(pageUtils,article);
-        request.setAttribute("pageUtils1",pageUtils1);
+        PageUtils pageUtils1 = articleService.findAllArticle(pageUtils, article);
+        request.setAttribute("pageUtils1", pageUtils1);
         return "wz_gl";
     }
 
@@ -107,35 +127,67 @@ public class IndexController {
      */
     @RequestMapping("/wzfl")
     public String wzfl(HttpServletRequest request, PageUtils pageUtils) {
-       /* List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());*/
+        /* *//* List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());*//*
       PageUtils pageUtils1 =   articleTypeService.findAll(pageUtils);
         logger.info("查处结果");
-        request.setAttribute("pageUtils1", pageUtils1);
+        //request.setAttribute("pageUtils1", pageUtils1);*/
         return "wz_fl";
     }
 
     /**
+     * 添加文章分类
+     *
+     * @return
+     */
+    @RequestMapping("/addArticleType")
+    public String addArticleType() {
+        return "add-articleType";
+    }
+
+    /**
+     * 编辑博客
+     * @return
+     */
+    @RequestMapping("/bjbk")
+    public String bjbk() {
+
+        return "bj_bk";
+    }
+
+    /**
+     * 修改文章分类
+     *
+     * @return
+     */
+    @RequestMapping("/updateArticleType")
+    public String updateArticleType() {
+        return "update-articleType";
+    }
+
+    /**
      * 文件上传
+     *
      * @return
      */
     @RequestMapping("/file_manager_json")
-    public String uplo(){
+    public String uplo() {
 
         return "file_manager_json";
     }
 
     @RequestMapping("/upload_json")
-    public String uploHuiX(){
+    public String uploHuiX() {
 
         return "upload_json";
     }
 
     /**
      * 草稿
+     *
      * @return
      */
     @RequestMapping("wzcg")
-    public  String wzcg(){
+    public String wzcg() {
 
         return "wz_cg";
     }

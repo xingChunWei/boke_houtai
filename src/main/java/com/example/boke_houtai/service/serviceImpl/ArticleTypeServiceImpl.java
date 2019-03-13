@@ -35,6 +35,17 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         return artileMapper.findAll(types);
     }
 
+    /**
+     * 分页
+     * @param page
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<ArticleTypes> findAllPage(Integer page, Integer limit) {
+        return artileMapper.findAllPage((page-1)*limit,limit);
+    }
+
     @Transactional
     @Override
     public void updataState(ArticleTypes articleTypes) {
@@ -60,6 +71,12 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     @Override
     public void updataArticle(ArticleTypes articleTypes) {
         artileMapper.updataArticle(articleTypes);
+    }
+
+
+    @Override
+    public int findCount() {
+        return artileMapper.findCount();
     }
 
 

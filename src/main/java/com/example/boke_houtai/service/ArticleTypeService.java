@@ -11,6 +11,8 @@ public interface ArticleTypeService {
 
     List<ArticleTypes> findAll(ArticleTypes types);
 
+    List<ArticleTypes> findAllPage(Integer page, Integer limit);
+
     PageUtils findAll(PageUtils types);
 
     void  updataState(ArticleTypes articleTypes);
@@ -20,4 +22,6 @@ public interface ArticleTypeService {
     void  delArray(Integer[] ids);
 
     void  updataArticle(ArticleTypes articleTypes);
+
+    int findCount();
 }

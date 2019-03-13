@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客后台系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/tab.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/layui/layui/layui.js}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+            integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<table lay-filter="test" id="tab">
+</table>
+</body>
+<script>
+    layui.use(['table', 'layer', 'laypage'], function () {
+
+        var $ = layui.jquery;
+        var table = layui.table;//表格
+        var layer = layui.layer;//弹窗
+        var laypage = layui.laypage;
+        table.render({
+            id: 'articleTypeTable',
+            elem: '#tab',
+            skin: 'line',
+            size: 'lg',
+            // even: true,//隔行换色
+            page: true,
+            limits:[5,10,20],
+            toolbar: 'default',//开启默认工具栏
+            height: 700,
+            title: '文章分类',
+            url: '/articleType/findAllArticle',
+            cols: [
+                [
+                    {checkbox: true},
+                    { title: '序号', type:'numbers'},
+                    , {field: 'articleTypeName', title: '分类名称'}
+                    , {field: 'describ', title: '描述'}
+                    , {field: 'state', title: '是否可用', toolbar: '#barDemo'}
+                    , {title: '操作', toolbar: '#Butt'}
+                ]
+            ]
+        })
+
+
+        //监听按钮事件-
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;//获取当前行的数据
+            switch (obj.event) {
+                case 'upStart':  //修改状态
+                    var state;
+                    if (data.state == '0') {
+                        state = 1;
+                    } else {
+                        state = 0;
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        url: '/articleType/updateState',
+                        data: {'id': data.id, 'state': state},
+                        success: function () {
+                            table.reload('articleTypeTable');
+                        }
+                    })
+
+                    break;
+
+
+                case 'bj':  //编辑
+                    var dx = {};
+                    //遍历把当前所操作的对象存储到js对象中
+                    $.each(data, function (name, value) {
+                        dx[name] = value;
+                    })
+                    layer.open({
+                        type: 2,
+                        title: '修改分类',
+                        area: ['600px', '300px'],
+                        content: '/index/updateArticleType',
+                        success: function (layero, index) {
+                            var body = layer.getChildFrame('body', index); //获取Ifram子页面所有元素
+                            var input = body.find('input'); //获取Ifram子页面所有input
+                            var textarea = body.find('textarea');
+                            $(input[0]).val(dx.articleTypeName);
+                            $(input[1]).val(dx.id);
+                            $(textarea[0]).val(dx.describ);
+
+
+                        }
+                    });
+
+                    break;
+
+                case 'del':  //删除
+                    layer.confirm('确认删除？', {
+                        btn: ['确定', '取消']
+                    }, function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/articleType/delArticleType',
+                            data: {'id': data.id},
+                            success: function (data) {
+                                if (data.code == '0') {
+                                    layer.close(layer.index)//关闭弹出框
+                                    table.reload('articleTypeTable');
+                                } else {
+                                    layer.close(layer.index)
+                                    layer.msg('删除失败', {
+                                        area: ['150px', '70px'],
+                                        time: 2000,
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        })
+                    });
+                    break;
+
+            }
+        });
+
+        //监听工具栏事件-
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);//获得被选中的值
+            var data = checkStatus.data;//获取到一个数组
+
+            switch (obj.event) {
+                case 'add':
+                    layer.open({
+                        title: '添加分类',
+                        type: 2,
+                        area: ['600px', '300px'], //宽高
+                        content: '/index/addArticleType'
+                    });
+                    break;
+
+                case 'update': //修改
+                    if (data.length == 0) {
+                        layer.msg('请选择一条数据', {
+                            area: ['200px', '70px'],
+                            time: 2000,
+                            icon: 5
+                        });
+                    } else {
+
+                        var dx = {};
+                        $.each(data[0], function (name, value) {
+                            dx[name] = value;
+                        })
+
+                        layer.open({
+                            type: 2,
+                            title: '修改分类',
+                            area: ['600px', '300px'],
+                            content: '/index/updateArticleType',
+                            success: function (layero, index) {
+                                var body = layer.getChildFrame('body', index);//获得子元素的iframDOM对象
+                                var inputs = body.find('input');
+                                var textarea = body.find('textarea');
+                                $(inputs[0]).val(dx.articleTypeName);
+                                $(inputs[1]).val(dx.id);
+                                $(textarea).val(dx.describ);
+                            }
+
+                        })
+                    }
+                    break;
+
+
+                case 'delete':  //批量删除
+                    if (data.length=='0'){
+                        layer.msg('请选择一条数据',{icon:5,time:2000})
+                        return;
+                    }else {
+                    var ids = new Array();
+                    for (var i = 0; i < data.length; i++) {
+                        ids[i] = data[i].id;
+                    }
+                    $.ajax({
+                        type: 'Get',
+                        url: '/articleType/delArray',
+                        data: {'ids': ids},
+                        success: function () {
+                            table.reload('articleTypeTable')
+                        },
+                        error: function () {
+                            layer.msg('删除失败', {
+                                area: ['150px', '70px'],
+                                time: 4000,
+                                icon: 5
+                            });
+                        }
+                    })
+
+                    layer.msg('删除中...', {icon: 16, shade: 0.3, time: 500})
+                    break;
+            }
+            }
+        });
+    })
+</script>
+
+<!--操作按钮-->
+<script type="text/html" id="Butt">
+    <div class="layui-btn-group">
+        {{# if(d.state ==1){ }}
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="upStart">取消</button>
+        {{# }else if(d.state == 0){ }}
+        <button class="layui-btn layui-btn-sm " lay-event="upStart">激活</button>
+        {{# } }}
+
+        <button class="layui-btn layui-btn-sm" lay-event="bj">编辑</button>
+        <!--删除-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del"><i class="layui-icon">&#xe640;</i>
+        </button>
+    </div>
+</script>
+
+<!--状态-->
+<script type="text/html" id="barDemo">
+    {{#if (d.state == 1) { }}
+    <span>是</span>
+    {{# }else if(d.state == 0){ }}
+    <span>否</span>
+    {{# } }}
+</script>
+
+</html>

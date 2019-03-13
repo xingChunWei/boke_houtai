@@ -73,11 +73,11 @@ public class ArticleTypeController {
      * @param articleTypes
      */
     @RequestMapping("/findArticle")
-    public JsonResult findArticle( ArticleTypes articleTypes) {
+    public JsonResult findArticle(ArticleTypes articleTypes) {
         JsonResult jsonResult = new JsonResult();
         List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
         if (articleTypeslist.size() != 0) {
-            jsonResult.setObj(articleTypeslist.get(0));
+                jsonResult.setData(articleTypeslist);
         }
         return jsonResult;
     }
@@ -85,14 +85,15 @@ public class ArticleTypeController {
     /**
      * 查询文章类型
      *
-     * @param articleTypes
+     * @param
      */
     @RequestMapping("/findAllArticle")
-    public JsonResult findAllArticle( ArticleTypes articleTypes) {
+    public JsonResult findAllArticle(Integer page, Integer limit) {
         JsonResult jsonResult = new JsonResult();
-        List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
+        jsonResult.setCount(articleService.findCount());
+        List<ArticleTypes> articleTypeslist = articleService.findAllPage(page, limit);
         if (articleTypeslist.size() != 0) {
-            jsonResult.setObj(articleTypeslist);
+            jsonResult.setData(articleTypeslist);
         }
         return jsonResult;
     }
@@ -121,15 +122,18 @@ public class ArticleTypeController {
      * @param id
      */
     @RequestMapping("/delArticleType")
-    public void delArticleType(int id) {
+    public JsonResult delArticleType(int id) {
+        JsonResult jsonResult = new JsonResult();
         try {
             articleService.delArticleType(id);
             logger.info("刪除分类成功");
         } catch (Exception e) {
             e.getStackTrace();
             logger.info("刪除分类失败");
+            jsonResult.setCode(300);
         }
 
+        return jsonResult;
     }
 
     /**
@@ -152,21 +156,20 @@ public class ArticleTypeController {
 
     /**
      * 修改文章类型
+     *
      * @param articleTypes
      */
     @RequestMapping("/updataArticle")
-    public JsonResult updataArticle(ArticleTypes articleTypes){
+    public JsonResult updataArticle(ArticleTypes articleTypes) {
         JsonResult jsonResult = new JsonResult();
         try {
             articleService.updataArticle(articleTypes);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             jsonResult.setCode(300);
         }
         return jsonResult;
     }
-
-
 
 
 }

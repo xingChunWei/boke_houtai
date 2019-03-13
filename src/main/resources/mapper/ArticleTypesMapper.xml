@@ -26,7 +26,7 @@
     </select>
 
     <select id="findAllPage" parameterType="int" resultType="com.example.boke_houtai.pojo.ArticleTypes">
-    select * from articletypes limit #{start},#{end}
+    select * from articletypes limit #{page},#{limit}
     </select>
    <!-- 统计总条数-->
     <select id="findCount" resultType="int">

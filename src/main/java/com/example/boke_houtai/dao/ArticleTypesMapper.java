@@ -23,11 +23,11 @@ public interface ArticleTypesMapper {
 
  /**
   * 分页
-  * @param start
-  * @param end
+  * @param page
+  * @param limit
   * @return
   */
- public List<ArticleTypes> findAllPage(int start, int end);
+ public List<ArticleTypes> findAllPage(int page, int limit);
 
  void updataState(ArticleTypes types);
 

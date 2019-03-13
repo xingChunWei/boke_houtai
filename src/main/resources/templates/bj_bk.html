@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客后台系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/tab.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/layui/layui/layui.js}"></script>
+
+    <!--Kindeditor富文本编辑器-->
+    <link rel="stylesheet" th:href="@{/kindeditor/themes/default/default.css}"/>
+    <link rel="stylesheet" th:href="@{/kindeditor/plugins/code/prettify.css}"/>
+    <script charset="utf-8" th:src="@{/kindeditor/kindeditor-all.js}"></script>
+    <script charset="utf-8" th:src="@{/kindeditor/lang/zh-CN.js}"></script>
+    <script charset="utf-8" th:src="@{/kindeditor/plugins/code/prettify.js}"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+            integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div style="margin-top: 30px">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">文章分类：</label>
+            <div class="layui-input-block" style="width: 400px">
+                <select name="aId" id="aId" lay-verify="required" lay-filter="test">
+                    <option value=''></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文章标题：</label>
+            <div class="layui-input-block" style="width: 400px">
+                <input type="text" name="title" id="title" placeholder="请输入文章标题" lay-verify="required"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">文章内容：</label>
+            <div class="layui-input-block" style="width: 400px">
+        <textarea id="editor_id" name="content" cols="100" rows="8"
+                  style="width:800px;height:500px;visibility:hidden;font-size: 14px"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">选项：</label>
+            <div class="layui-input-block">
+                <input type="radio" name="state" id="state" value="0" title="草稿箱">
+                <input type="radio" name="state" value="1" title="发布" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input class="layui-btn" type="button" lay-submit lay-filter="*" value="保存">
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    layui.use(['form', 'jquery', 'layer'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        form.on('submit(*)', function (obj) {
+            $.ajax({
+                type: 'POST',
+                url: '/article/saveArticle',
+                async: false,
+                data: {
+                    'aId': $("#aId").val(),
+                    'title': $("#title").val(),
+                    'content': editor.html(),
+                    'state': obj.field.state
+                },
+                success: function (data) {
+                    if (data.code == '0') {
+
+                        layer.msg('文章保存成功',{time: 1000, icon:6,end:function () {
+                                location.reload();
+                            }})
+
+                    }else {
+                        layer.msg('文章保存失败',{time: 2000, icon:5})
+                    }
+                }
+            });
+        })
+
+    })
+
+
+    $(function () {
+        findArticleType();
+    });
+
+    //查询文章分类渲染select
+    function findArticleType() {
+
+        $.ajax({
+            type: 'GET',
+            url: '/articleType/findArticle',
+            data: {'state': 1},
+            dataType: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    $("#aId").append(' <option value=' + data.data[i].id + '>' + data.data[i].articleTypeName + '</option>')
+
+                }
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript" defer="defer">
+
+
+    KindEditor.ready(function (K) {
+
+        window.editor = K.create('#editor_id', {
+            uploadJson: '/upload/fileUpload',  //图片上传路径
+            fileManagerJson: '/index/jsp/file_manager_json',
+            allowFileManager: true,
+            afterCreate: function () {
+                var self = this;
+                K.ctrl(document, 13, function () {
+                    self.sync();
+                    document.forms['example'].submit();
+                });
+                K.ctrl(self.edit.doc, 13, function () {
+                    self.sync();
+                    document.forms['example'].submit();
+                });
+            }
+        });
+
+    });
+
+</script>
+</html>
