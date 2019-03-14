@@ -89,12 +89,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/wzgl")
-    public String wzgl(HttpServletRequest request, PageUtils pageUtils, Article article) {
-
-        //发布文章状态
-        article.setState(1);
-        PageUtils pageUtils1 = articleService.findAllArticle(pageUtils, article);
-        request.setAttribute("pageUtils1", pageUtils1);
+    public String wzgl() {
         return "wz_gl";
     }
 
@@ -126,11 +121,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/wzfl")
-    public String wzfl(HttpServletRequest request, PageUtils pageUtils) {
-        /* *//* List<ArticleTypes> articleTypes = articleService.findAll(new ArticleTypes());*//*
-      PageUtils pageUtils1 =   articleTypeService.findAll(pageUtils);
-        logger.info("查处结果");
-        //request.setAttribute("pageUtils1", pageUtils1);*/
+    public String wzfl() {
         return "wz_fl";
     }
 

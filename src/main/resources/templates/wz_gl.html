@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客后台系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/layui/css/layui.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/layui/layui/layui.js}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+            integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<table class="layui-table" lay-filter="test" id="tab"></table>
+</body>
+<script>
+    layui.use(['table', 'form', 'jquery', 'layer'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+
+        table.render({
+            title: '文章管理',
+            id: 'articleTable',
+            elem: '#tab',
+            skin: 'row',
+            size: 'lg',
+            page: true,
+            toolbar: '#Sech',
+            height: 700,
+            url: '/article/wzglList?state=1',
+            cols: [
+                [
+                    {checkbox: true},
+                    {title: '序号', type: 'numbers'},
+                    , {field: 'title', title: '标题', width: 270}
+                    , {
+                    field: 'creationTime', title: '创建时间', align: 'center', sort: true, templet: function (row) {
+                        return createTime(row.creationTime)
+                    }
+                }
+                    , {field: 'readNumber', title: '阅读量', sort: true, align: 'center'}
+                    , {field: 'likes', title: '点赞量', align: 'center', sort: true}
+                    , {
+                    title: '文章分类', align: 'center', templet: function (row) {
+                        return zy(row.articleTypes.articleTypeName)
+                    }
+                }
+                    , {title: '操作', toolbar: '#Butt', align: 'center'}
+
+                ]
+            ]
+        })
+
+        //监听行工具
+        table.on('tool(test)', function (obj) {
+            switch (obj.event) {
+                case 'del':
+
+                    layer.confirm("确定删除？", {
+                        btn: ['确定', '取消'],
+                    }, function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/article/delArticle',
+                            dataType: 'json',
+                            async: false,
+                            data: {'id': obj.data.id},
+                            success: function (data) {
+                                if (data.code == '0') {
+                                    layer.msg('删除成功！', {
+                                        icon: 6,
+                                        time:1000
+                                    })
+                                    table.reload('articleTable')
+                                } else {
+                                    layer.msg('删除失败！', {
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        });
+                    })
+                    break;
+
+                case 'show':
+                    window.open('/article/wzck?id='+obj.data.id)
+                    break;
+            }
+        })
+    })
+
+</script>
+
+<script type="text/html" id="Butt">
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="show">查看</button>
+        <button class="layui-btn layui-btn-sm" lay-event="bj">编辑</button>
+        <!--删除-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del"><i class="layui-icon">&#xe640;</i>
+        </button>
+    </div>
+</script>
+<script type="text/html" id="Sech">
+    <div class="demoTable">
+        搜索标题：
+        <div class="layui-inline">
+            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+
+</script>
+
+<!--//时间戳变换为日期格式-->
+<script type="text/javascript">
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
+
+    //模板转义
+    function zy(v) {
+        return v;
+    }
+</script>
+</html>

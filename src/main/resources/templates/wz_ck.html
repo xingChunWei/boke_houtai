@@ -1,0 +1,51 @@
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8">
+    <title>文章演示</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" th:href="@{/layui/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/ht_index.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/layui/layui/layui.js}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+            integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<!--博客文章字体-->
+<div class="wZText_mai" style="background-color: white">
+    <!--标题-->
+    <h2 class="wz_text_bt" th:text="${article.title}">
+
+       </h2>
+    <div class="wz_text_xx">
+        <span>发布时间：</span><span th:text="${#dates.format(article.creationTime,'yyyy-MM-dd HH:mm')}"></span>
+       <span class="wz_text_xx_kg"></span>
+        <span>作者：</span><span th:text="${article.founder}"></span>
+        <span class="wz_text_xx_kg"></span>
+        <span>阅读：</span><span th:text="${article.readNumber}"></span>
+        <span class="wz_text_xx_kg"></span>
+        <span>评论：</span><span th:text="${article.likes}"></span>
+    </div>
+
+    <!--文字-->
+    <div class="wz_text_font" th:utext="${article.content}">
+        　
+    </div>
+    <div>
+        <p style="padding: 10px;font-size: 16px;color: red">
+            版权声明：本文版权归作者（<span>邢小白的春天</span>）所有，欢迎转载。但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。
+        </p>
+    </div>
+</div>
+</body>
+</html>

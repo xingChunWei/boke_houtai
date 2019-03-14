@@ -23,35 +23,24 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.saveArticle(article);
     }
 
+    /**
+     * 分页查询
+     * @param page
+     * @param limit
+     * @param state
+     * @return
+     */
     @Override
-    public PageUtils findAllArticle(PageUtils pageUtils, Article article) {
-        //数据总条数
-        pageUtils.setCountSize(articleMapper.findCount(article));
-        //数据总页数
-        double countPage = (double) pageUtils.getCountSize() / pageUtils.getPageSize();
-        pageUtils.setCountPage((int) Math.ceil(countPage));
-        //文章状态
-        int state = article.getState();
-        //分页开始
-        int start = (pageUtils.getCurrentPage() - 1) * pageUtils.getPageSize();
-        //结束
-        int end = pageUtils.getPageSize();
-
-        List<Article> list=null;
-        if (article.getaId() != null) {
-            list = articleMapper.findAllArticleAid(article.getaId(),state, start, end);
-        } else {
-            list = articleMapper.findAllArticle(state, start, end);
-        }
-
-        pageUtils.setObjList(list);
+    public List<Article> findAllArticle(Integer state, Integer page, Integer limit) {
 
 
-        return pageUtils;
+        return articleMapper.findAllArticle(state, ( page- 1) * limit, limit);
     }
+
 
     /**
      * 查看博客文章
+     *
      * @param id
      * @return
      */
@@ -62,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 修改博客文章
+     *
      * @param article
      */
     @Override

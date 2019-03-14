@@ -85,18 +85,34 @@
         </div>
         <!--<div class="navBar layui-side-scroll"></div>-->
 
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <!--<div class="layui-side-scroll">
+            &lt;!&ndash; 左侧导航区域（可配合layui已有的垂直导航） &ndash;&gt;
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item"><a th:href="@{/index/main}" target="left">首页</a></li>
-                <li class="layui-nav-item"><a th:href="@{/index/bjbk}" target="left">编辑博客</a></li>
-                <li class="layui-nav-item"><a th:href="@{/index/wzfl}" target="left">文章分类</a></li>
+                <li class="layui-nav-item"><a th:href="" target="left">首页</a></li>
+                <li class="layui-nav-item"><a  target="left">编辑博客</a></li>
+                <li class="layui-nav-item"><a  target="left">文章分类</a></li>
             </ul>
-        </div>
+        </div>-->
+
+        <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+            <li class="layui-nav-item" data-type="tabAdd"><a  th:href="@{/index/main}" target="left"><i class="layui-icon layui-icon-home"></i>  首页</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="layui-icon layui-icon-list" style="font-size: 18px"></i>文章</a>
+                <dl class="layui-nav-child">
+                    <dd><a data-url="/index/bjbk" data-id="2" data-title="编辑博客" class="site-demo-active" data-type="tabAdd" th:href="@{/index/bjbk}" target="left">编辑博客</a></dd>
+                    <dd><a  data-url="/index/wzfl" data-id="3" data-title="文章分类" class="site-demo-active"  data-type="tabAdd" th:href="@{/index/wzfl}" target="left">文章分类</a></dd>
+                    <dd><a  data-url="/index/wzfl" data-id="3" data-title="文章分类" class="site-demo-active"  data-type="tabAdd" th:href="@{/index/wzgl}" target="left">文章管理</a></dd>
+                    <dd><a   class="site-demo-active" data-type="tabAdd" th:href="@{/index/wzcg}" target="left">草稿箱</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a  class="site-demo-active" data-type="tabAdd" href="javascript:;" target="left"><i class="layui-icon layui-icon-notice" style="font-size: 18px"></i>留言</a></li>
+            <li class="layui-nav-item"><a   class="site-demo-active" data-type="tabAdd"  href="javascript:;" target="left"><i class="layui-icon layui-icon-reply-fill" style="font-size: 18px"></i>评论</a></li>
+            <li class="layui-nav-item"><a  class="site-demo-active"  data-type="tabAdd" href="javascript:;" target="left"><i class="layui-icon layui-icon-delete" style="font-size: 18px"></i>回收箱</a></li>
+        </ul>
     </div>
     <!-- 右侧内容 -->
     <div class="layui-body layui-form">
-        <div class="layui-tab marg0" lay-filter="bodyTab">
+        <div class="layui-tab marg0" lay-filter="demo">
             <ul class="layui-tab-title top_tab">
                 <li class="layui-this" lay-id=""><i class="iconfont icon-computer"></i> <cite>后台首页</cite></li>
             </ul>
@@ -132,4 +148,10 @@
 <script type="text/javascript" th:src="@{/js/leftNav.js}"></script>
 <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
+<script>
+layui.use('element', function(){
+var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+});
+</script>
 </html>

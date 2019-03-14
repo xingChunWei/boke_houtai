@@ -35,15 +35,15 @@
             size: 'lg',
             // even: true,//隔行换色
             page: true,
-            limits:[5,10,20],
-            toolbar: 'default',//开启默认工具栏
+            limits: [5, 10, 20],
+            toolbar: '#Butn',//开启默认工具栏
             height: 700,
             title: '文章分类',
             url: '/articleType/findAllArticle',
             cols: [
                 [
                     {checkbox: true},
-                    { title: '序号', type:'numbers'},
+                    {title: '序号', type: 'numbers'},
                     , {field: 'articleTypeName', title: '分类名称'}
                     , {field: 'describ', title: '描述'}
                     , {field: 'state', title: '是否可用', toolbar: '#barDemo'}
@@ -178,33 +178,33 @@
 
 
                 case 'delete':  //批量删除
-                    if (data.length=='0'){
-                        layer.msg('请选择一条数据',{icon:5,time:2000})
+                    if (data.length == '0') {
+                        layer.msg('请选择一条数据', {icon: 5, time: 2000})
                         return;
-                    }else {
-                    var ids = new Array();
-                    for (var i = 0; i < data.length; i++) {
-                        ids[i] = data[i].id;
-                    }
-                    $.ajax({
-                        type: 'Get',
-                        url: '/articleType/delArray',
-                        data: {'ids': ids},
-                        success: function () {
-                            table.reload('articleTypeTable')
-                        },
-                        error: function () {
-                            layer.msg('删除失败', {
-                                area: ['150px', '70px'],
-                                time: 4000,
-                                icon: 5
-                            });
+                    } else {
+                        var ids = new Array();
+                        for (var i = 0; i < data.length; i++) {
+                            ids[i] = data[i].id;
                         }
-                    })
-
-                    layer.msg('删除中...', {icon: 16, shade: 0.3, time: 500})
-                    break;
-            }
+                        $.ajax({
+                            type: 'Get',
+                            url: '/articleType/delArray',
+                            data: {'ids': ids},
+                            success: function (data) {
+                                table.reload('articleTypeTable')
+                                if (data.code == '0') {
+                                    layer.msg('删除中...', {icon: 16, shade: 0.3, time: 500})
+                                } else {
+                                    layer.msg('删除失败', {
+                                        area: ['150px', '70px'],
+                                        time: 1000,
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        })
+                        break;
+                    }
             }
         });
     })
@@ -226,6 +226,20 @@
     </div>
 </script>
 
+<script type="text/html" id="Butn">
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe654;</i>
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="update">
+            <i class="layui-icon">&#xe642;</i>
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete">
+            <i class="layui-icon">&#xe640;</i>
+        </button>
+
+    </div>
+</script>
 <!--状态-->
 <script type="text/html" id="barDemo">
     {{#if (d.state == 1) { }}

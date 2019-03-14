@@ -3,8 +3,8 @@
 <mapper namespace="com.example.boke_houtai.dao.ArticleMapper">
 
     <insert id="saveArticle" parameterType="com.example.boke_houtai.pojo.Article">
-          insert into article (id,title,content,founder,creationTime,a_id,state)
-          values (#{id},#{title},#{content},#{founder},#{creationTime},${aId},#{state});
+          insert into article (id,title,content,founder,creationTime,readNumber,likes,a_id,state)
+          values (#{id},#{title},#{content},#{founder},#{creationTime},#{readNumber},#{likes},${aId},#{state});
     </insert>
 
 

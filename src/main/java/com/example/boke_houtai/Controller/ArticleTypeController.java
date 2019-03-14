@@ -62,6 +62,8 @@ public class ArticleTypeController {
         List<ArticleTypes> articleTypeslist = articleService.findAll(articleTypes);
         if (articleTypeslist.size() != 0) {
             jsonResult.setCode(300);
+        }else {
+
         }
 
         return jsonResult;

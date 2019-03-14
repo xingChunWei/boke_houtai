@@ -8,11 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/article")
@@ -54,11 +58,28 @@ public class ArticleController {
      *
      * @return
      */
-    @RequestMapping("/wZText")
-    public String findOne(HttpServletRequest request, String id) {
+    @RequestMapping("/wzck")
+    public String findOne(Model model, String id) {
         Article article = articleService.findOne(id);
-        request.setAttribute("article", article);
-        return "wZText";
+       model.addAttribute("article",article);
+        return "wz_ck";
+    }
+
+    /**
+     * 查询所有文章
+     *
+     * @param state
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/wzglList")
+    @ResponseBody
+    public JsonResult findAll(Integer state, Integer page, Integer limit) {
+        JsonResult jsonResult = new JsonResult();
+        List<Article> list = articleService.findAllArticle(state, page, limit);
+        jsonResult.setData(list);
+        return jsonResult;
     }
 
     /**
@@ -75,18 +96,45 @@ public class ArticleController {
         } catch (Exception e) {
             e.getStackTrace();
             jsonResult.setCode(300);
+            logger.info("修改博客失败！");
         }
 
         return jsonResult;
     }
 
+    /**
+     * 查询文章
+     *
+     * @param article
+     * @return
+     */
     @RequestMapping("/findOne")
     public JsonResult findOne1(Article article) {
         JsonResult jsonResult = new JsonResult();
         Article article1 = articleService.findOne(article.getId());
+        return jsonResult;
+
+    }
+
+    /**
+     * 删除文章
+     * @param article
+     * @return
+     */
+    @RequestMapping(value = "/delArticle", method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult delArticle(Article article) {
+        JsonResult jsonResult = new JsonResult();
+        try {
+            article.setState(2);//删除状态
+            articleService.updatetArticle(article);
+        }catch (Exception e){
+            e.getStackTrace();
+            jsonResult.setCode(300);
+            logger.info("删除失败");
+        }
 
 
         return jsonResult;
-
     }
 }
