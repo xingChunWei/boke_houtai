@@ -25,16 +25,53 @@
 
     </resultMap>
    <!-- 分页查询-->
-<select id="findAllArticle" parameterType="int" resultMap="selectArticleAndArticleTypes">
-          select a.id, a.title ,a.content,a.founder,a.creationTime,a.readNumber,a.likes,a.a_id,t.id tid,t.articleTypeName from  article a inner join articletypes t on a.a_id = t.id  where a.state=${state} limit ${start},${end}
+<select id="findAllArticle" parameterType="com.example.boke_houtai.utils.Page" resultMap="selectArticleAndArticleTypes">
+          select a.id,
+                 a.title ,
+                 a.content,
+                 a.founder,
+                 a.creationTime,
+                 a.readNumber,
+                 a.likes,
+                 a.a_id,
+                 t.id tid,
+                 t.articleTypeName
+          from  article a
+            inner join articletypes t
+              on a.a_id = t.id
+
+          <where>
+          <if test="state !=null">
+            and  a.state=${state}
+          </if>
+          <if test="condition !=''and condition !=null">
+              and title like "%"#{condition}"%"
+          </if>
+          </where>
+                limit ${start},${limit}
 </select>
     <!--单一文章分类-->
     <select id="findAllArticleAid" parameterType="int" resultMap="selectArticleAndArticleTypes">
-        select a.id, a.title ,a.content,a.founder,a.creationTime,a.readNumber,a.likes,a.a_id,t.id tid,t.articleTypeName from  article a inner join articletypes t on a.a_id = t.id  where a.state=${state} and a.a_id = ${aId} limit ${start},${end}
+        select
+               a.id,
+               a.title ,
+               a.content,
+               a.founder,
+               a.creationTime,
+               a.readNumber,
+               a.likes,
+               a.a_id,
+               t.id tid,
+               t.articleTypeName
+        from  article a
+          inner join articletypes t
+            on a.a_id = t.id
+        where a.state=${state}
+          and a.a_id = ${aId} limit ${start},${end}
     </select>
 
     <!--统计个数-->
-    <select id="findCount" parameterType="Article" resultType="int">
+    <select id="findCount" parameterType="int" resultType="int">
         select count(id) from article
         <where>
             <if test="state!=null">

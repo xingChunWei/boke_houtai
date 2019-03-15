@@ -50,5 +50,7 @@
     border-bottom: 2px solid #8c8c8c;
     font-size: 18px;
     line-height: normal;
+    word-wrap: break-word;
+    word-break: normal;
 }
 

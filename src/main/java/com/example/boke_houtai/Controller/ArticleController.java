@@ -3,6 +3,7 @@ package com.example.boke_houtai.Controller;
 import com.example.boke_houtai.pojo.Article;
 import com.example.boke_houtai.pojo.JsonResult;
 import com.example.boke_houtai.service.ArticleService;
+import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.UUidUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,18 +67,16 @@ public class ArticleController {
     }
 
     /**
-     * 查询所有文章
-     *
-     * @param state
+     * 查詢所有文章
      * @param page
-     * @param limit
      * @return
      */
     @RequestMapping("/wzglList")
     @ResponseBody
-    public JsonResult findAll(Integer state, Integer page, Integer limit) {
+    public JsonResult findAll(Page page) {
         JsonResult jsonResult = new JsonResult();
-        List<Article> list = articleService.findAllArticle(state, page, limit);
+        jsonResult.setCount(articleService.findCount(page.getState()));
+        List<Article> list = articleService.findAllArticle(page);
         jsonResult.setData(list);
         return jsonResult;
     }
@@ -113,7 +112,6 @@ public class ArticleController {
         JsonResult jsonResult = new JsonResult();
         Article article1 = articleService.findOne(article.getId());
         return jsonResult;
-
     }
 
     /**

@@ -3,6 +3,7 @@ package com.example.boke_houtai.service.serviceImpl;
 import com.example.boke_houtai.dao.ArticleMapper;
 import com.example.boke_houtai.pojo.Article;
 import com.example.boke_houtai.service.ArticleService;
+import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.PageUtils;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +15,25 @@ import java.util.List;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
+
     @Autowired
     private ArticleMapper articleMapper;
-
-
     @Override
     public void saveArticle(Article article) {
         articleMapper.saveArticle(article);
     }
 
     /**
-     * 分页查询
+     * 分页
+     *
      * @param page
-     * @param limit
-     * @param state
      * @return
      */
     @Override
-    public List<Article> findAllArticle(Integer state, Integer page, Integer limit) {
-
-
-        return articleMapper.findAllArticle(state, ( page- 1) * limit, limit);
+    public List<Article> findAllArticle(Page page) {
+        page.setStart((page.getPage()-1)*page.getLimit());
+        return articleMapper.findAllArticle(page);
     }
-
 
     /**
      * 查看博客文章
@@ -55,7 +52,19 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article
      */
     @Override
+    @Transactional
     public void updatetArticle(Article article) {
         articleMapper.updatetArticle(article);
+    }
+
+
+    /**
+     * 统计个数
+     * @param state
+     * @return
+     */
+    @Override
+    public int findCount(Integer state) {
+        return 0;
     }
 }

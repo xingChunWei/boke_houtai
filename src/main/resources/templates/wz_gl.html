@@ -25,14 +25,14 @@
         var layer = layui.layer;
         var form = layui.form;
         var $ = layui.jquery;
-
-        table.render({
+      var $table  = table.render({
             title: '文章管理',
             id: 'articleTable',
             elem: '#tab',
             skin: 'row',
             size: 'lg',
             page: true,
+            limits: [5, 10, 20],
             toolbar: '#Sech',
             height: 700,
             url: '/article/wzglList?state=1',
@@ -56,14 +56,25 @@
                     , {title: '操作', toolbar: '#Butt', align: 'center'}
 
                 ]
-            ]
-        })
+            ],
+
+        });
+
+      /*条件查询*/
+        //点击按钮表格重载
+        $('.layui-btn').on('click', function(){
+            $table.reload({
+                where:{
+                    condition:$("#demoReload").val().trim() //把获取输入框的值 传递到后台
+                }
+
+            })
+        });
 
         //监听行工具
         table.on('tool(test)', function (obj) {
             switch (obj.event) {
                 case 'del':
-
                     layer.confirm("确定删除？", {
                         btn: ['确定', '取消'],
                     }, function () {
@@ -91,7 +102,17 @@
                     break;
 
                 case 'show':
-                    window.open('/article/wzck?id='+obj.data.id)
+                    window.open('/article/wzck?id='+obj.data.id)  //打开一个全新的页面显示
+                    break;
+
+                case 'bj':
+
+                    layer.open({
+                        type:2,
+                        title:'修改博客',
+                        content:'/index/bjbk?id='+obj.data.id,
+                        area:['1000px','850px'],
+                    });
                     break;
             }
         })

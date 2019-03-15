@@ -22,12 +22,11 @@
 </table>
 </body>
 <script>
-    layui.use(['table', 'layer', 'laypage'], function () {
+    layui.use(['table', 'layer'], function () {
 
         var $ = layui.jquery;
         var table = layui.table;//表格
         var layer = layui.layer;//弹窗
-        var laypage = layui.laypage;
         table.render({
             id: 'articleTypeTable',
             elem: '#tab',
