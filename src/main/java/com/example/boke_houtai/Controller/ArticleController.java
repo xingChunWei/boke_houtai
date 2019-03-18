@@ -75,7 +75,7 @@ public class ArticleController {
     @ResponseBody
     public JsonResult findAll(Page page) {
         JsonResult jsonResult = new JsonResult();
-        jsonResult.setCount(articleService.findCount(page.getState()));
+        jsonResult.setCount(articleService.findCount(page));
         List<Article> list = articleService.findAllArticle(page);
         jsonResult.setData(list);
         return jsonResult;

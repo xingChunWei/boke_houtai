@@ -71,15 +71,15 @@
     </select>
 
     <!--统计个数-->
-    <select id="findCount" parameterType="int" resultType="int">
+    <select id="findCount" parameterType="com.example.boke_houtai.utils.Page" resultType="int">
         select count(id) from article
         <where>
-            <if test="state!=null">
+            <if test="state !=null">
               and state=#{state}
             </if>
-          <if test="aId !=null">
+        <!--  <if test="aId !=null">
               and a_id=#{aId}
-          </if>
+          </if>-->
         </where>
 ;
     </select>

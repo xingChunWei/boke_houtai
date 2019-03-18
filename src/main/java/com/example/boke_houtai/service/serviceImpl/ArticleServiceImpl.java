@@ -60,11 +60,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 统计个数
-     * @param state
+     * @param page
      * @return
      */
     @Override
-    public int findCount(Integer state) {
-        return 0;
+    public int findCount(Page page) {
+
+
+        return articleMapper.findCount(page);
     }
 }

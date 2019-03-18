@@ -18,6 +18,150 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<table></table>
+<table lay-filter="test" id="tab"></table>
 </body>
 </html>
+<script>
+    layui.use(['table', 'jquery', 'layer'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+        var $table = table.render({
+            title: '文章管理',
+            id: 'articleTable',
+            elem: '#tab',
+            skin: 'row',
+            size: 'lg',
+            toolbar: '#Sech',
+            page: true,
+            limits: [5, 10, 20],
+            height: 700,
+            url: '/article/wzglList?state=0',
+            cols: [
+                [
+                    {checkbox: true},
+                    {title: '序号', type: 'numbers'},
+                    {field: 'id', title: 'ID', hide: true}
+                    , {field: 'title', title: '标题'}
+                    , {
+                    field: 'creationTime', title: '创建时间', align: 'center', sort: true, templet: function (row) {
+                        return createTime(row.creationTime)
+                    }
+                }
+                    , {field: 'readNumber', title: '阅读量', sort: true, align: 'center', width: 100,hide:true}
+                    , {field: 'likes', title: '点赞量', align: 'center', sort: true, width: 100,hide:true}
+                    , {
+                    title: '文章分类', align: 'center', templet: function (row) {
+                        return zy(row.articleTypes.articleTypeName)
+                    }
+                }
+                    , {title: '操作', toolbar: '#Butt', align: 'center'}
+
+                ]
+            ]
+
+        });
+
+        table.on('tool(test)',function (obj) {
+
+            switch (obj.event) {
+
+                case 'fb':
+                    $.ajax({
+                        type:'GET',
+                        url:'/article/updateArticle',
+                        data:{'id':obj.data.id,'state':1},
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.code=='0'){
+                                layer.msg('发布成功',{
+                                    icon: 6,
+                                    time: 1000
+                                });
+                                table.reload('articleTable');
+                            } else{
+                                layer.msg('发布失败！',{
+                                    icon:5,
+                                    time:1000
+                                })
+                            }
+                        }
+                    });
+
+                    break;
+
+
+                case 'bj':
+
+                    layer.open({
+                        type: 2,
+                        title: '修改博客',
+                        content: '/index/bjbk?id=' + obj.data.id,
+                        area: ['1000px', '850px'],
+                    });
+                    break;
+
+                case 'del':
+                    layer.confirm("确定删除？", {
+                        btn: ['确定', '取消'],
+                    }, function () {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/article/delArticle',
+                            dataType: 'json',
+                            async: false,
+                            data: {'id': obj.data.id},
+                            success: function (data) {
+                                if (data.code == '0') {
+                                    layer.msg('删除成功！', {
+                                        icon: 6,
+                                        time: 1000
+                                    })
+                                    table.reload('articleTable')
+                                } else {
+                                    layer.msg('删除失败！', {
+                                        icon: 5
+                                    });
+                                }
+                            }
+                        });
+                    })
+            }
+        })
+
+
+    });
+
+
+</script>
+<script type="text/html" id="Butt">
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-sm" lay-event="fb">发布</button>
+        <button class="layui-btn layui-btn-sm" lay-event="bj">编辑</button>
+        <!--删除-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del"><i class="layui-icon">&#xe640;</i>
+        </button>
+    </div>
+</script>
+<!--//时间戳变换为日期格式-->
+<script type="text/javascript">
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        return str;
+    }
+
+    //模板转义
+    function zy(v) {
+        return v;
+    }
+</script>

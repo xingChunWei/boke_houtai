@@ -26,10 +26,10 @@ public interface ArticleMapper {
 
     /**
      * 统计数量
-     * @param state
+     * @param page
      * @return
      */
-    int findCount(Integer state);
+    int findCount(Page page);
 
     /**
      * 查看博客

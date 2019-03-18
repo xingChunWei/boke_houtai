@@ -17,37 +17,37 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<table class="layui-table" lay-filter="test" id="tab"></table>
+<table lay-filter="test" id="tab"></table>
 </body>
 <script>
-    layui.use(['table', 'form', 'jquery', 'layer'], function () {
+    layui.use(['table','jquery', 'layer'], function () {
         var table = layui.table;
         var layer = layui.layer;
-        var form = layui.form;
         var $ = layui.jquery;
-      var $table  = table.render({
+        var $table = table.render({
             title: '文章管理',
             id: 'articleTable',
             elem: '#tab',
             skin: 'row',
             size: 'lg',
+            toolbar: '#Sech',
             page: true,
             limits: [5, 10, 20],
-            toolbar: '#Sech',
             height: 700,
             url: '/article/wzglList?state=1',
             cols: [
                 [
                     {checkbox: true},
                     {title: '序号', type: 'numbers'},
-                    , {field: 'title', title: '标题', width: 270}
+                    {field: 'id', title: 'ID',hide:true}
+                    , {field: 'title', title: '标题'}
                     , {
                     field: 'creationTime', title: '创建时间', align: 'center', sort: true, templet: function (row) {
                         return createTime(row.creationTime)
                     }
                 }
-                    , {field: 'readNumber', title: '阅读量', sort: true, align: 'center'}
-                    , {field: 'likes', title: '点赞量', align: 'center', sort: true}
+                    , {field: 'readNumber', title: '阅读量', sort: true, align: 'center', width: 100}
+                    , {field: 'likes', title: '点赞量', align: 'center', sort: true, width: 100}
                     , {
                     title: '文章分类', align: 'center', templet: function (row) {
                         return zy(row.articleTypes.articleTypeName)
@@ -56,16 +56,18 @@
                     , {title: '操作', toolbar: '#Butt', align: 'center'}
 
                 ]
-            ],
+            ]
 
         });
 
-      /*条件查询*/
+
+
+        /*条件查询*/
         //点击按钮表格重载
-        $('.layui-btn').on('click', function(){
+        $('.layui-btn').on('click', function () {
             $table.reload({
-                where:{
-                    condition:$("#demoReload").val().trim() //把获取输入框的值 传递到后台
+                where: {
+                    condition: $("#demoReload").val().trim() //把获取输入框的值 传递到后台
                 }
 
             })
@@ -88,7 +90,7 @@
                                 if (data.code == '0') {
                                     layer.msg('删除成功！', {
                                         icon: 6,
-                                        time:1000
+                                        time: 1000
                                     })
                                     table.reload('articleTable')
                                 } else {
@@ -102,16 +104,16 @@
                     break;
 
                 case 'show':
-                    window.open('/article/wzck?id='+obj.data.id)  //打开一个全新的页面显示
+                    window.open('/article/wzck?id=' + obj.data.id)  //打开一个全新的页面显示
                     break;
 
                 case 'bj':
 
                     layer.open({
-                        type:2,
-                        title:'修改博客',
-                        content:'/index/bjbk?id='+obj.data.id,
-                        area:['1000px','850px'],
+                        type: 2,
+                        title: '修改博客',
+                        content: '/index/bjbk?id=' + obj.data.id,
+                        area: ['1000px', '850px'],
                     });
                     break;
             }
