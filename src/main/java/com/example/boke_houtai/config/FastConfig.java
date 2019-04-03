@@ -3,9 +3,11 @@ package com.example.boke_houtai.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
  */
 @Configuration
 public class FastConfig extends WebMvcConfigurerAdapter {
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters){
         //调用父类配置
@@ -34,6 +37,19 @@ public class FastConfig extends WebMvcConfigurerAdapter {
         fastMediaType.add(MediaType.APPLICATION_JSON_UTF8);
         fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaType);
         converters.add(fastJsonHttpMessageConverter);
+    }
+
+
+
+    /**
+     * 图片资源路径映射
+     * @param registry
+     */
+    @Override
+    public  void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:/D:/attached/image/");
+
+
     }
 
 

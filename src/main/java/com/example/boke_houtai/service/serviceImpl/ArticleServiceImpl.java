@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -52,7 +53,6 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article
      */
     @Override
-    @Transactional
     public void updatetArticle(Article article) {
         articleMapper.updatetArticle(article);
     }

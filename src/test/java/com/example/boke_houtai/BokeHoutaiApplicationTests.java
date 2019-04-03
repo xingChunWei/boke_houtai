@@ -24,8 +24,7 @@ public class BokeHoutaiApplicationTests {
     private ArticleMapper articleMapper;
 @Test
 public  void  testC(){
- List<ArticleTypes>  list= articleTypesMapper.findAllPage(0,2);
-    System.out.println(list.size());
+
 }
 
 @Test

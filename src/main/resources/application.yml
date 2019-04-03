@@ -27,3 +27,4 @@ mybatis:
 #图片上传路径
 upload:
   url: D:/attached/
+  saveUrl: /upload/

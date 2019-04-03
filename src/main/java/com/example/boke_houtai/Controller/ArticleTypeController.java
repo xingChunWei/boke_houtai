@@ -1,8 +1,9 @@
 package com.example.boke_houtai.Controller;
 
 import com.example.boke_houtai.pojo.ArticleTypes;
-import com.example.boke_houtai.pojo.JsonResult;
+import com.example.boke_houtai.utils.JsonResult;
 import com.example.boke_houtai.service.ArticleTypeService;
+import com.example.boke_houtai.utils.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,10 +91,10 @@ public class ArticleTypeController {
      * @param
      */
     @RequestMapping("/findAllArticle")
-    public JsonResult findAllArticle(Integer page, Integer limit) {
+    public JsonResult findAllArticle(Page page) {
         JsonResult jsonResult = new JsonResult();
         jsonResult.setCount(articleService.findCount());
-        List<ArticleTypes> articleTypeslist = articleService.findAllPage(page, limit);
+        List<ArticleTypes> articleTypeslist = articleService.findAllPage(page);
         if (articleTypeslist.size() != 0) {
             jsonResult.setData(articleTypeslist);
         }

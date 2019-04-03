@@ -34,17 +34,25 @@ public class FileController {
     @Value("${upload.url}")
     private String uploadUrl;
 
+//图片访问路径
+    @Value("${upload.saveUrl}")
+    private  String saveUr;
+
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     @ResponseBody
     public void fileUpload(HttpServletRequest request,
                            HttpServletResponse response) {
         //文件保存目录路径
-        String savePath = request.getServletContext().getRealPath("/")
-                + "upload/";
+       /* String savePath = request.getServletContext().getRealPath("/")
+                + "upload/";*/
+
+        String savePath =uploadUrl;
 
 
         //文件保存目录URL
-        String saveUrl = request.getContextPath() + "/upload/";
+        /*String saveUrl = request.getContextPath() + "/upload/";*/
+
+        String saveUrl = saveUr;
 
         //定义允许上传的文件扩展名
         HashMap<String, String> extMap;
@@ -87,15 +95,16 @@ public class FileController {
             }
             //创建文件夹
             savePath += dirName + "/";
-            saveUrl += dirName + "/";
+            //saveUrl += dirName + "/";
             File saveDirFile = new File(savePath);
             if (!saveDirFile.exists()) {
                 saveDirFile.mkdirs();
             }
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String ymd = sdf.format(new Date());
-            savePath += ymd + "/";
-            saveUrl += ymd + "/";
+           /* SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String ymd = sdf.format(new Date());*/
+            /*savePath += ymd + "/";
+            saveUrl += ymd + "/";*/
+
             File dirFile = new File(savePath);
             if (!dirFile.exists()) {
                 dirFile.mkdirs();

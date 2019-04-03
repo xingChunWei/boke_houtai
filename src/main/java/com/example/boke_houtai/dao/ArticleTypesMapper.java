@@ -1,6 +1,7 @@
 package com.example.boke_houtai.dao;
 
 import com.example.boke_houtai.pojo.ArticleTypes;
+import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.PageUtils;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,10 +25,9 @@ public interface ArticleTypesMapper {
  /**
   * 分页
   * @param page
-  * @param limit
   * @return
   */
- public List<ArticleTypes> findAllPage(int page, int limit);
+ public List<ArticleTypes> findAllPage(Page page);
 
  void updataState(ArticleTypes types);
 

@@ -1,7 +1,7 @@
 package com.example.boke_houtai.Controller;
 
 import com.example.boke_houtai.pojo.Article;
-import com.example.boke_houtai.pojo.JsonResult;
+import com.example.boke_houtai.utils.JsonResult;
 import com.example.boke_houtai.service.ArticleService;
 import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.UUidUtils;
@@ -13,9 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,12 +61,13 @@ public class ArticleController {
     @RequestMapping("/wzck")
     public String findOne(Model model, String id) {
         Article article = articleService.findOne(id);
-       model.addAttribute("article",article);
+        model.addAttribute("article", article);
         return "wz_ck";
     }
 
     /**
      * 查詢所有文章
+     *
      * @param page
      * @return
      */
@@ -108,14 +108,22 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/findOne")
+    @ResponseBody
     public JsonResult findOne1(Article article) {
         JsonResult jsonResult = new JsonResult();
         Article article1 = articleService.findOne(article.getId());
+        List<Article> articles;
+        if (article1 != null) {
+            articles = new ArrayList<>();
+            articles.add(article1);
+            jsonResult.setData(articles);
+        }
         return jsonResult;
     }
 
     /**
      * 删除文章
+     *
      * @param article
      * @return
      */
@@ -126,7 +134,7 @@ public class ArticleController {
         try {
             article.setState(2);//删除状态
             articleService.updatetArticle(article);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
             jsonResult.setCode(300);
             logger.info("删除失败");

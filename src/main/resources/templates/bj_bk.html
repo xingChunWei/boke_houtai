@@ -78,13 +78,23 @@
         </div>
     </form>
 </div>
+
+<div>
+    <table id="tab">
+
+    </table>
+</div>
 </body>
 <script th:inline="javascript">
     var id = [[${article?.id}]];
-    layui.use(['form', 'jquery', 'layer'], function () {
+    layui.use(['form', 'jquery', 'layer','table'], function () {
         var form = layui.form;
         var $ = layui.jquery;
+        var table = layui.table;//表格
         var layer = layui.layer;
+
+        table.
+
         form.on('submit(1)', function (obj) {
             $.ajax({
                 type: 'POST',

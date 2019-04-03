@@ -1,6 +1,7 @@
 package com.example.boke_houtai.service;
 
 import com.example.boke_houtai.pojo.ArticleTypes;
+import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.PageUtils;
 
 import java.util.List;
@@ -11,10 +12,7 @@ public interface ArticleTypeService {
 
     List<ArticleTypes> findAll(ArticleTypes types);
 
-    List<ArticleTypes> findAllPage(Integer page, Integer limit);
-
-    PageUtils findAll(PageUtils types);
-
+    List<ArticleTypes> findAllPage(Page page);
     void  updataState(ArticleTypes articleTypes);
 
     void  delArticleType(int id);

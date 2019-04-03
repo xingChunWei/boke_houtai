@@ -3,6 +3,7 @@ package com.example.boke_houtai.service.serviceImpl;
 import com.example.boke_houtai.dao.ArticleTypesMapper;
 import com.example.boke_houtai.pojo.ArticleTypes;
 import com.example.boke_houtai.service.ArticleTypeService;
+import com.example.boke_houtai.utils.Page;
 import com.example.boke_houtai.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,12 @@ import java.util.Map;
  * @date 2019-2-28 下午13:49
  */
 @Service
+@Transactional
 public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     @Autowired
     private ArticleTypesMapper artileMapper;
 
-    @Transactional
     @Override
     public void saveArticleTypl(ArticleTypes types) {
         artileMapper.saveArtileTypl(types);
@@ -38,12 +39,12 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     /**
      * 分页
      * @param page
-     * @param limit
      * @return
      */
     @Override
-    public List<ArticleTypes> findAllPage(Integer page, Integer limit) {
-        return artileMapper.findAllPage((page-1)*limit,limit);
+    public List<ArticleTypes> findAllPage(Page page) {
+        page.setStart((page.getPage()-1)*page.getLimit());
+        return artileMapper.findAllPage(page);
     }
 
     @Transactional
@@ -53,13 +54,11 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
 
     }
 
-    @Transactional
     @Override
     public void delArticleType(int id) {
         artileMapper.delArticleType(id);
     }
 
-    @Transactional
     @Override
     public void delArray(Integer[] ids) {
         Map<String,Integer[]> map = new HashMap<>();
@@ -67,7 +66,6 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
         artileMapper.delArray(map);
     }
 
-    @Transactional
     @Override
     public void updataArticle(ArticleTypes articleTypes) {
         artileMapper.updataArticle(articleTypes);
@@ -80,19 +78,4 @@ public class ArticleTypeServiceImpl implements ArticleTypeService {
     }
 
 
-    @Override
-    public PageUtils findAll(PageUtils pageUtils){
-        //数据总条数
-        pageUtils.setCountSize(artileMapper.findCount());
-        //总页数
-        double countPage = (double) pageUtils.getCountSize()/pageUtils.getPageSize();
-        pageUtils.setCountPage((int)Math.ceil(countPage));
-        //起始位置
-        int start = (pageUtils.getCurrentPage()-1)*pageUtils.getPageSize();
-        //每页数据
-        List<ArticleTypes> list = artileMapper.findAllPage(start,pageUtils.getPageSize());
-        pageUtils.setObjList(list);
-        return pageUtils;
-
-    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章实体
@@ -22,6 +23,8 @@ public class Article {
     private String likes;   //文章点赞量
     private Integer aId; //外键文章类型
     private Integer state;  //状态:2 回收站，1 已发布 ，0：草稿s
+
+    private List<Comment> comments; //文章评论
 
     private ArticleTypes articleTypes;
 
@@ -111,5 +114,13 @@ public class Article {
 
     public void setArticleTypes(ArticleTypes articleTypes) {
         this.articleTypes = articleTypes;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
